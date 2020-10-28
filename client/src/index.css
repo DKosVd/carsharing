@@ -1,0 +1,264 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+}
+
+a {
+    padding: 0px;
+    margin: 0px;
+    text-decoration: none;
+}
+
+body {
+    height: 100%;
+}
+
+.main__tab_choose {
+    box-shadow: 0 15px 15px -10px rgba(0,0,0, 1);
+}
+
+.header__item_choose {
+    box-shadow: 0 15px 15px -10px rgba(0,0,0, 1);
+}
+
+li {
+    list-style: none;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 1600px;
+    flex:1 0  auto;
+    margin: 0 auto;
+    min-height: 100vh;
+    background-color:#EFEFEF;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* HEADER ON */
+
+.header {
+    flex: 0 0 auto;
+}
+
+.header__items {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    margin: 20px 0px 20px 0px;
+}
+
+.header__item {
+    flex: 1 1 20%;
+    text-align: center;
+    padding: 10px;
+    color: #080706;
+    align-self: center;
+    transition: all .3s ease;
+}
+
+.header__item:nth-child(n+2):hover {
+    font-weight: bold;
+    box-shadow: 0 15px 15px -10px rgba(0,0,0, .5);
+    cursor: pointer;
+}
+
+.header__item:first-child:hover {
+    opacity: .5;
+    cursor: pointer;
+}
+
+
+.header__image {
+    width: 1280px;
+    height: 500px;
+    background-image:url(./assets/img/car-repair-362150_1280.jpg);
+    border-radius: 10px;
+}
+
+.header__logo {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-image: url(./assets/img/logo.png) ;
+}
+
+/* HEADER OFF */
+
+/* MAIN ON */
+
+.main {
+    flex: 1 0 auto;
+}
+
+.main__actions {
+    margin: 50px 0px 0px 0px;
+}
+
+
+.main__items {
+    max-width: 1280px;
+    max-height:300px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.main__item {
+    display: flex;
+    background: url(./assets/img/car.jpg);
+    width:30%;
+    height: 200px;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    border-radius: 10px;
+    transition: all 1s;
+}
+
+.main__item:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.main__item p {
+    font-size: 20px;
+    padding: 5%;
+}
+
+.main__item:nth-child(1) {
+    background-color: burlywood;
+}
+
+.main__autopark {
+    margin: 40px 0px 40px 0px;
+}
+
+.main__title {
+    text-align: center;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 26px;
+    margin: 0px 0px 10px 0px;
+}
+
+.main__tabs {
+    display: flex;
+    justify-content: center;
+    margin: 0px 0px 30px 0px;
+}
+
+.main__tab {
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px;
+    transition: all .3s;
+}
+
+.main__tab:hover {
+    box-shadow: 0 15px 15px -10px rgba(0,0,0, .5);
+    cursor: pointer;
+}
+
+.main__cars {
+    max-width: 1000px;
+    margin:0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main__car {
+    flex: 0 1 20%;
+    margin: 10px 0px 10px 20px;
+    max-height: 200px;
+}
+
+.car__img {
+    width: 200px;
+    min-height: 100px;
+    background-color: whitesmoke;
+}
+
+
+/* MAIN OFF */
+
+/* FOOTER ON */
+
+.footer {
+    flex: 0 0 auto;
+}
+
+.footer__main {
+    width: auto;
+    height: 100px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin: 0px 0px 20px 0px;
+}
+
+.footer__row {
+    display: flex;
+    justify-content: space-around;
+}
+
+.footer__item_logo {
+    padding: 20px;
+}
+
+.footer__item {
+    align-self: center;
+    flex: 1 1 20%;
+}
+
+.footer__item:first-child:hover {
+    opacity: .5;
+    cursor: pointer;
+}
+
+/* FOOTER OFF */
+
+
+/* SERVICES ON */
+
+.services__taxi {
+    margin: 50px 0px 10px 0px;
+    text-align: center;
+}
+
+.taxi__title {
+    margin: 0px 0px 10px 0px;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.taxi__subtitle {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.services__rent {
+    margin: 50px 0px 10px 0px;
+    text-align: center;
+}
+
+.rent__title {
+    margin: 0px 0px 10px 0px;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.rent__subtitle {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* SERVICES OFF */
