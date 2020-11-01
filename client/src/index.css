@@ -304,3 +304,50 @@ li {
 
 
 /* LOGIN OFF */
+
+/* LOGIN AND REG ON*/
+
+.logingAndReg {
+    display: flex;
+    height: 250px;
+}
+
+.Login {
+    padding: 15px;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.Reg {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    margin: 0px 0px 0px 50px;
+}
+
+.logingAndReg input {
+    width: 150px;
+    height: 25px;
+    border-radius: 10px;
+}
+
+.Login label {
+    padding: 0 10px 0px 0px;
+}
+
+.error {
+    color:red;
+}
+
+.logingAndReg__btn {
+    margin: 10px 0px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.logingAndReg__btn:hover {
+    cursor: pointer;
+}
+
+/* LOGIN AND REG OFF */
