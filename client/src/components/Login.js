@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Login(props) {
+function Login({name, id}) {
     return (
         <>
             <div className="main">
@@ -19,8 +19,8 @@ function Login(props) {
                         </div>
                                 <div className="personal__info">
                                     <p>Личные данные</p>
-                                    <p><span className="personal__info personal__info_name">Имя</span><span
-                                        className="personal__info personal__info_surname">Фамилия</span></p>
+                                    <p><span className="personal__info personal__info_name">{ name }</span><span
+                                        className="personal__info personal__info_surname">{ `${name}__${id}` }</span></p>
                                 </div>
                             </div>
                         </div>

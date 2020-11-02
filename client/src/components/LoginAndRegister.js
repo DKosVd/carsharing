@@ -1,6 +1,9 @@
 import React from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUsers } from '../store/reducers/loginpage';
+import Login from './Login';
 
 const LoginAndRegister = () => {
     const validationSchema = yup.object().shape({
@@ -13,11 +16,13 @@ const LoginAndRegister = () => {
         password: yup.string().typeError('Должно быть строкой').required('Обязательное поле'),
         name: yup.string().required('Обязательное поле'),
     })
-
+    const dispatch = useDispatch();
+    const state = useSelector(state => state.loginpage)
 
     return (
         <div className="container">
             <div className="logingAndReg">
+                {(!state.isAuth && <>
                 <Formik initialValues={
                     {
                         email: '',
@@ -26,7 +31,7 @@ const LoginAndRegister = () => {
                 }
                     validateOnBlur
                     validationSchema={validationSchema}
-                    onSubmit={(values) => console.log(values)}
+                    onSubmit={(values) => dispatch(setUsers(values))}
                 >
                     {({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty }) => (
                         <div className="logingAndReg Login">
@@ -110,6 +115,9 @@ const LoginAndRegister = () => {
                         </div>
                     )}
                 </Formik>
+                </>) || (state.isAuth && <>
+                <Login {...state}></Login>
+                </>)}
             </div>
         </div>
     )

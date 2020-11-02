@@ -5,6 +5,6 @@ const connectionLogin = mysql.createPool({
   user: "root",
   database: "node-js-login",
   password: ""
-});
+}).promise();
 
 module.exports = connectionLogin;

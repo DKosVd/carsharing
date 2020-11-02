@@ -14,16 +14,18 @@ function loginpage(state = initialState, action) {
             return {
                 ...state,
                 id: action.id,
-                name: action.name
+                name: action.name,
+                isAuth: true,
             }
         default: return state;
     }
 }
 
-export const setUsers = () => (dispatch) => {
-    authme()
-        .then( (user) => {
-            dispatch(setUser(user))
+export const setUsers = (values) => (dispatch) => {
+    authme(values)
+        .then( ({id, name}) => {
+            console.log(id, name)
+            dispatch(setUser(id, name))
         })
 }
 
