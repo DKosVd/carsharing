@@ -4,29 +4,14 @@ const app = express();
 const bcrypt = require('bcrypt');
 const connection = require('./db/db');
 const connectionLogin = require('./db/db_login');
-const cookieSession = require('cookie-session');
+// const cookieSession = require('cookie-session');
 
+// app.use(cookieSession({
+//     name: 'session',
+//     keys: ['key1', 'key2'],
+//     maxAge:  3600 * 1000 // 1hr
+// }));
 
-app.use(cookieSession({
-    name: 'session',
-    keys: ['key1', 'key2'],
-    maxAge:  3600 * 1000 // 1hr
-}));
-
-const ifNotLoggedin = (req, res, next) => {
-    if(!req.session.isLoggedIn){
-        return res.render('login-register');
-    }
-    next();
-}
-
-
-const ifLoggedin = (req,res,next) => {
-    if(req.session.isLoggedIn){
-        return res.redirect('/main');
-    }
-    next();
-}
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,8 +20,9 @@ app.post('/login', (req, res) => {
    connectionLogin.execute("Select * from `users` where `email` = ?", [req.body.email]).then( ([rows]) => {
        bcrypt.compare(req.body.password, rows[0].password).then(result => {
            if (result) {
-            //    req.session.isLoggedIn = true; // тут надо менять на true
-            //    req.session.userID = rows[0].id;
+                // req.session.isLoggedIn = true; 
+                // req.session.userID = rows[0].id;
+                // console.log(req.session)
                 console.log('Авторизовался')
                res.send(rows[0])
            } else {

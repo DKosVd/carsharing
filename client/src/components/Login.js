@@ -21,6 +21,7 @@ function Login({name, id}) {
                                     <p>Личные данные</p>
                                     <p><span className="personal__info personal__info_name">{ name }</span><span
                                         className="personal__info personal__info_surname">{ `${name}__${id}` }</span></p>
+                                    <button>Выход</button>
                                 </div>
                             </div>
                         </div>
