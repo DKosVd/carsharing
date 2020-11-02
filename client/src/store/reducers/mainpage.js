@@ -1,5 +1,5 @@
 import { getCars } from "../../api/api";
-import { setCar } from "../actions/mainpage";
+import { setCar, setLoading } from "../actions/mainpage";
 
 
 let initialState = {
@@ -17,11 +17,17 @@ function mainpage(state = initialState, action) {
                 cars: [...action.cars],
                 isLoading: true,
             }
+        case 'SET_LOADING': 
+            return {
+                ...state,
+                isLoading: action.value
+            }
         default: return state;
     }
 }
 
 export const setCars = (type) => (dispatch) => {
+    dispatch(setLoading(false))
     getCars(type)
         .then( cars => {
             dispatch(setCar(cars))
