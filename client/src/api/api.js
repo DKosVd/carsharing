@@ -7,3 +7,4 @@ export const authme = (values) => {
 export const getCars = (type) => {
     return axios.get(`/main/${type}`).then(res => res.data)
 }
+

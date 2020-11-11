@@ -45,7 +45,7 @@ const LoginAndRegister = () => {
                                     value={values.email}
                                 />
                             </div>
-                            { errors.email && touched.email && <p className={'error'}>{errors.email}</p>}
+                            { (errors.email && touched.email || state.errorWithEmail) && <p className={'error'}>{errors.email || state.errorWithEmail}</p>}
                             <div>
                                 <label htmlFor={"password"}>Password</label><br />
                                 <input
@@ -56,7 +56,7 @@ const LoginAndRegister = () => {
                                     value={values.password}
                                 />
                             </div>
-                            { errors.password && touched.password && <p className={'error'}>{errors.password}</p>}
+                            { (errors.password && touched.password || state.errorWithPassword) && <p className={'error'}>{errors.password ||  state.errorWithPassword}</p>}
                             <button
                                 className="logingAndReg__btn"
                                 type="submit"
@@ -106,7 +106,7 @@ const LoginAndRegister = () => {
                                     onBlur={handleBlur}
                                     value={values.password} />
                             </div>
-                            { errors.password && touched.password && <p className={'error'}>{errors.password}</p>}
+                            { errors.password && touched.password  && <p className={'error'}>{errors.password}</p>}
                             <button
                                 className="logingAndReg__btn"
                                 type="submit"
@@ -116,7 +116,7 @@ const LoginAndRegister = () => {
                     )}
                 </Formik>
                 </>) || (state.isAuth && <>
-                <Login {...state}></Login>
+                <Login {...state}/>
                 </>)}
             </div>
         </div>

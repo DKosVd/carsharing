@@ -10,7 +10,6 @@ function LoginPage(props) {
     return (
         <>
         <Header/>
-        {/* <Login/> */}
         <LoginAndRegister/>
         <Footer/>
         </>
