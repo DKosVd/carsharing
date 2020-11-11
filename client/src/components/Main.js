@@ -20,7 +20,7 @@ function Main(props) {
             <div className="main__actions">
                 <div className="main__row">
                     <div className="main__items">
-                        <ItemForMain name={['Автопарк', 'VIP TAXI', 'Сдать авто в аренду']}/>
+                        <ItemForMain name={['VIP TAXI', 'Сдать авто в аренду']}/>
                     </div>
                 </div>
             </div>
