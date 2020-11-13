@@ -16,7 +16,8 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "request": "^2.79.0"
   },
   "devDependencies": {
     "concurrently": "^4.0.1"

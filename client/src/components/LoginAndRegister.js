@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUsers } from '../store/reducers/loginpage';
+import { setUsers, registerNewUser } from '../store/reducers/loginpage';
 import Login from './Login';
 
 const LoginAndRegister = () => {
@@ -31,7 +31,8 @@ const LoginAndRegister = () => {
                 }
                     validateOnBlur
                     validationSchema={validationSchema}
-                    onSubmit={(values) => dispatch(setUsers(values))}
+                    onSubmit={(values,) => dispatch(setUsers(values))
+                }
                 >
                     {({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty }) => (
                         <div className="logingAndReg Login">
@@ -73,7 +74,11 @@ const LoginAndRegister = () => {
                     }}
                     validateOnBlur
                     validationSchema={valSchema}
-                    onSubmit={(values) => console.log(values)}
+                    onSubmit={(values, {resetForm}) => { 
+                        dispatch(registerNewUser(values))
+                        resetForm({values:''})
+                        }
+                    }
                 >
                     {({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty }) => (
                         <div className="logingAndReg Reg">
@@ -96,7 +101,7 @@ const LoginAndRegister = () => {
                                     onBlur={handleBlur}
                                     value={values.email} />
                              </div>
-                            { errors.email && touched.email && <p className={'error'}>{errors.email}</p>}
+                            { (errors.email && touched.email || state.emailExist) && <p className={'error'}>{errors.email || state.emailExist}</p>}
                             <div>
                                 <label htmlFor="name">Password</label><br/>
                                 <input
@@ -112,6 +117,7 @@ const LoginAndRegister = () => {
                                 type="submit"
                                 disabled={!isValid && !dirty}
                                 onClick={handleSubmit}>Зарегистрироваться</button>
+                            {state.register && <p className={'register'}>Пользователь зарегистрирован</p>}
                         </div>
                     )}
                 </Formik>

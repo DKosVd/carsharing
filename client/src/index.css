@@ -339,6 +339,10 @@ li {
     color:red;
 }
 
+.register {
+    color: green;
+}
+
 .logingAndReg__btn {
     margin: 10px 0px;
     padding: 10px;
@@ -505,10 +509,20 @@ li {
 
 .Modal {
     margin: 10% auto;
-    width: 40%;
+    max-width: 40%;
     height: 500px;
     border-radius: 20px;
     background: #fff;
+    overflow-y: auto;
+    font-size: 50px;
+}
+
+.ModalBody {
+    overflow: hidden;
+    word-wrap: break-word;
+    max-width: 400px;
+    max-height: auto;
+    background-color: red;
 }
 
 .ModalClose {
@@ -548,3 +562,4 @@ li {
 }
 
 /* Car off */
+

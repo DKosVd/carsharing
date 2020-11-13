@@ -6,6 +6,12 @@ export function setUser(id, name) {
     }
 }
 
+export function setRegister() {
+    return {
+        type: 'SET_REGISTER'
+    }
+}
+
 export function setError(error) {
     return {
         type: 'ERROR',
@@ -16,6 +22,13 @@ export function setError(error) {
 export function setErrorEmail(error) {
     return {
         type: 'ERROR_WITH_EMAIL',
+        error
+    }
+}
+
+export function emailExist(error) {
+    return {
+        type: 'EMAIL_EXIST',
         error
     }
 }

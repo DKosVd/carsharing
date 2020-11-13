@@ -8,3 +8,6 @@ export const getCars = (type) => {
     return axios.get(`/main/${type}`).then(res => res.data)
 }
 
+export const register = (values) => {
+    return axios.post('/register', values).then(res => res.data)
+}

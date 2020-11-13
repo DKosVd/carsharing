@@ -10,6 +10,9 @@ function Modal(props) {
                     <div className="ModalClose">
                         <span className="close" ></span>
                     </div>
+                    <div className="ModalBody">
+                    {props.text}
+                    </div>
                 </div>
             </div>
         </>

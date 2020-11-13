@@ -18,6 +18,19 @@ app.post('/login', (req, res) => {
     })
 })
 
+app.post('/register', (req, res) => {
+    connectionLogin.execute("Select * from `users` where `email` = ?", [req.body.email]).then(([rows]) => {
+        rows.length ? res.send('emailExist') : bcrypt.hash(req.body.password, 12).then((hash_pass) => {
+            connectionLogin.query("Insert into `users` (`name`, `email`, `password`) VALUES(?, ?,?)", [req.body.name, req.body.email, hash_pass]).
+            then( result => {
+                res.send('AccountCreated')
+            }).catch(err => {
+                console.error(err)
+            })
+        })
+    })
+})
+
 app.get('/main/:type', (req, result) => {
     if (req.params.type == 'Все машины') {
         connection.query('SELECT * FROM autos', function (err, data) {
