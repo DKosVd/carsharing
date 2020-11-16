@@ -25,14 +25,13 @@ function Cars(props) {
                 <div className="car__img">
                     <img src="" alt="car" />
                 </div>
-                <div className="descriptions">
+                <div className="descriptions" id={props.id_car_mark}>
                     <p>Название: {props.fullname}</p>
-                    <p>Цена: {props.price_day}</p>
                     <p>Тип: {props.type}</p>
                     <p className="car__btn car__btn_help" onClick={handleClickIf}>Условия</p>
-                    {activeIf && <Modal text={'aasdasdasdasadsasdasdasdsdasdasdфывфвфывфывфывфывфывфывфывфывфывфывфывфывфывфывфывфывфывфывфывфывфывфывфыфыволфывфывофывффыволыыл'} close={closeModal}/>}
+                    {activeIf && <Modal text={'aasdasdasdasad'} close={closeModal}/>}
                     <p className="car__btn car__btn_chose" onClick={handleClick}>Забронировать</p>
-                    {active && <Modal text={'Забронировать'} close={closeModal}/>}
+                    {active && <Modal text={'Забронировasasdadasdasdasdasdasdать'} close={closeModal} {...props}/>}
                 </div>
             </div>
         </>

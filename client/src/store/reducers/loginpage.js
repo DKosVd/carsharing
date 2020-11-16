@@ -56,6 +56,8 @@ export const setUsers = (values) => (dispatch) => {
                         dispatch(setError('Неверный пароль')) 
                     case 'email':
                         dispatch(setErrorEmail('Неверный email')) 
+                    default: 
+                        return new Error('Результат пустой')
                 }
             }
         })
@@ -69,6 +71,8 @@ export const registerNewUser = (values) => (dispatch) => {
                     dispatch(emailExist('Пользователь с таким email существует'))
                 case 'AccountCreated':
                     dispatch(setRegister(true))
+                default: 
+                    return new Error('Результат пустой')
             }
         })
 }

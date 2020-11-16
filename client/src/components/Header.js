@@ -1,7 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Header(props) {
+    const  { isAuth }  = useSelector(state => state.loginpage)
+    console.log(isAuth)
     return (
         <header className="header">
             <div className="container">
@@ -17,7 +20,7 @@ function Header(props) {
                             <Link className="header__item" to='/services'><li >Services</li></Link>
                             <Link className="header__item" to='/about'><li>About</li></Link>
                             <Link className="header__item" to='/contacts'><li>Contacts</li></Link>
-                            <Link className="header__item" to='/login'><li>Login</li></Link>
+                            <Link className="header__item" to='/login'><li>{!isAuth ? 'Login': 'Logout'}</li></Link>
                         </ul>
                     </div>
                     <div className="header__image">

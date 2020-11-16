@@ -33,7 +33,7 @@ li {
     flex:1 0  auto;
     margin: 0 auto;
     min-height: 100vh;
-    background-color:#EFEFEF;
+    background-color:#4C5866 ;
 }
 
 .container {
@@ -178,13 +178,13 @@ li {
 
 .main__car {
     flex: 0 1 20%;
-    margin: 10px 0px 10px 20px;
-    max-height: 200px;
+    margin: 10px 0px 10px 40px;
+    max-height: 350px;
 }
 
 .car__img {
     width: 200px;
-    min-height: 100px;
+    min-height: 200px;
     background-color: whitesmoke;
 }
 
@@ -510,19 +510,80 @@ li {
 .Modal {
     margin: 10% auto;
     max-width: 40%;
-    height: 500px;
+    height: 550px;
     border-radius: 20px;
     background: #fff;
     overflow-y: auto;
-    font-size: 50px;
 }
 
 .ModalBody {
-    overflow: hidden;
+    /* overflow: hidden;
     word-wrap: break-word;
     max-width: 400px;
     max-height: auto;
-    background-color: red;
+    background-color: red; */
+}
+
+.ModalContent {
+    overflow: hidden;
+    word-wrap: break-word;
+    margin: 30px auto;
+    max-width: 700px;
+    min-height: 400px;
+}
+
+.ModalHeader {
+    background-color: white;
+    margin: 0px 0px 30px 0px;
+    font-size: 35px;
+    text-align: center;
+}
+
+
+.ModalBody {
+    display: flex;
+    width: auto;
+    height: 400px;
+}
+
+.ModalBody__img {
+    flex: 1 0 50%;
+}
+
+.ModalBody__desc {
+    flex: 1 0 50%;
+}
+
+.ModalBody__desc p {
+    padding: 0px 0px 30px 15px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.ModalBody__managment {
+    padding: 0px 0px 30px 15px;
+}
+
+.ModalBody__managment input {
+    margin: 0px 10px 0px 0px;
+}
+
+.ModalBody__accepted {
+    margin: 10px 0px;
+    border-radius: 10px;
+}
+
+.ModalBody__accepted button {
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #CCCCFF;
+    color: black;
+    font-size: 16px;
+    margin: 10px 0px 0px 0px;
+}
+
+.ModalBody__accepted button:disabled {
+    color: grey;
 }
 
 .ModalClose {
