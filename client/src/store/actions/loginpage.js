@@ -33,3 +33,9 @@ export function emailExist(error) {
     }
 }
 
+export function Logout() {
+    return {
+        type: 'LOGOUT'
+    }
+}
+

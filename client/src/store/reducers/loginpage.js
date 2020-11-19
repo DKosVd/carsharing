@@ -1,5 +1,5 @@
-import { authme, register } from "../../api/api";
-import { setUser, setError, setErrorEmail, emailExist, setRegister } from "../actions/loginpage";
+import { authme, register, cookie, logout } from "../../api/api";
+import { setUser, setError, setErrorEmail, emailExist, setRegister, Logout } from "../actions/loginpage";
 
 let initialState = {
     id: null, 
@@ -41,6 +41,13 @@ function loginpage(state = initialState, action) {
                 ...state,
                 register: true
             }
+        case 'LOGOUT':
+            return {
+                ...state,
+                id: null,
+                name: null,
+                isAuth: false,
+            }
         default: return state;
     }
 }
@@ -60,6 +67,20 @@ export const setUsers = (values) => (dispatch) => {
                         return new Error('Результат пустой')
                 }
             }
+        })
+}
+
+export const Setcookie = () => (dispatch) => {
+    cookie()
+        .then(({id, name}) => {
+            id && dispatch(setUser(id, name))
+        })
+}
+
+export const LogOut = () => (dispatch) => {
+    logout()
+        .then(res => {
+            dispatch(Logout())
         })
 }
 

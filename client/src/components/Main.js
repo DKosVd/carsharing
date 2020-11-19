@@ -4,6 +4,8 @@ import ItemForMain from './ItemForMain';
 import { useDispatch, useSelector } from 'react-redux';
 import Cars from './Cars';
 import Preloader from './Preloader';
+import { Setcookie } from '../store/reducers/loginpage';
+
 
 function Main(props) {
     const [active, setActive] = React.useState(0);
@@ -11,9 +13,8 @@ function Main(props) {
     const dispatch = useDispatch();
     React.useEffect(() => {
         dispatch(setCars(tabs[active]))
+        dispatch(Setcookie())
     }, [active])
-
-
     return (
         <div className="main"> 
         <div className="container">

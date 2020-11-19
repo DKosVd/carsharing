@@ -11,3 +11,11 @@ export const getCars = (type) => {
 export const register = (values) => {
     return axios.post('/register', values).then(res => res.data)
 }
+
+export const cookie = () => {
+    return axios.get('/main').then(res => res.data)
+}
+
+export const logout = () => {
+    return axios.get('/logout').then(res => res.data)
+}

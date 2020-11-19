@@ -20,7 +20,7 @@ function Header(props) {
                             <Link className="header__item" to='/services'><li >Services</li></Link>
                             <Link className="header__item" to='/about'><li>About</li></Link>
                             <Link className="header__item" to='/contacts'><li>Contacts</li></Link>
-                            <Link className="header__item" to='/login'><li>{!isAuth ? 'Login': 'Logout'}</li></Link>
+                            <Link className="header__item" to='/login'><li>{!isAuth ? 'Login': 'Profile'}</li></Link>
                         </ul>
                     </div>
                     <div className="header__image">

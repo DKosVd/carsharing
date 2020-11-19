@@ -4,18 +4,42 @@ const app = express();
 const bcrypt = require('bcrypt');
 const connection = require('./db/db');
 const connectionLogin = require('./db/db_login');
+const session = require('express-session');
 
 
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+    secret: 'secret',
+    cookie: {maxAge: 600000},
+    saveUninitialized: true,
+    resave: true,
+    
+}));
 
 app.post('/login', (req, res) => {
-    connectionLogin.execute("Select * from `users` where `email` = ?", [req.body.email]).then(([rows]) => {
-        rows.length  ?  bcrypt.compare(req.body.password, rows[0].password).then(result => {
-            result ? res.send(rows[0]) : res.send('password')
-        }) : res.send('email')
-    })
+    const { email, password} = req.body;
+    if(req.session.authenticated) {
+        res.send(req.session.user)
+    } else {
+        connectionLogin.execute("Select * from `users` where `email` = ?", [email]).then(([rows]) => {
+            rows.length  ?  bcrypt.compare(password, rows[0].password).then(result => {
+                if( result ) {
+                    const {id, name} = rows[0];
+                    req.session.authenticated = true;
+                    req.session.user = {
+                        id,
+                        name,
+                    }
+                    res.send(rows[0])
+                } else {
+                    res.send('password')
+                }
+            }) : res.send('email')
+        })
+    }
+  
 })
 
 app.post('/register', (req, res) => {
@@ -46,5 +70,19 @@ app.get('/main/:type', (req, result) => {
     }
 });
 
+
+
+app.get('/main', (req, res) => {
+    if(req.session.authenticated) {
+        res.send(req.session.user)
+    } else {
+        res.send('NoAuth')
+    }
+})
+
+app.get('/logout', (req, res) => {
+    req.session.destroy()
+    res.send('LogOut')
+})
 
 app.listen(5000, () => console.log(`Listening on port 5000`));
