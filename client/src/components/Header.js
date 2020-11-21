@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 
 function Header(props) {
     const  { isAuth }  = useSelector(state => state.loginpage)
-    console.log(isAuth)
     return (
         <header className="header">
             <div className="container">

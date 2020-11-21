@@ -19,3 +19,7 @@ export const cookie = () => {
 export const logout = () => {
     return axios.get('/logout').then(res => res.data)
 }
+
+export const orderPost = (values) => {
+    return axios.post('/order', values).then( res => res.data)
+}

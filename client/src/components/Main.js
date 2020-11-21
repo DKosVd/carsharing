@@ -8,7 +8,7 @@ import { Setcookie } from '../store/reducers/loginpage';
 
 
 function Main(props) {
-    const [active, setActive] = React.useState(0);
+    const [active, setActive] = React.useState(0); //state redux
     const { cars, isLoading, tabs} = useSelector(state => state.mainpage);
     const dispatch = useDispatch();
     React.useEffect(() => {
@@ -33,7 +33,7 @@ function Main(props) {
                 {
                 !isLoading ? <Preloader/> : 
                 <div className="main__cars">
-                    {cars && cars.map( (car, index) => <Cars key={`${car}__${index}`} {...car}/>)}
+                    {cars && cars.map( (car, index) => <Cars key={`${car}__${index}`} {...car} button={true} />)}
                 </div>
                 }
             </div>

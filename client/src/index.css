@@ -268,22 +268,78 @@ li {
 
 .main__personal {
     display: flex;
+    border: 1px solid white;
+    border-radius: 10px;
+    margin: 2rem 0px 0px 0px;
+    padding: 1rem;
+    width: 900px;
+}
+
+.personal__item {
+    padding: 0;
+    margin: 0;
+}
+
+
+
+.personal__items {
+    display: block;
 }
 
 .personal__nav {
-    width: 30%;
-    padding: 30px;
+    flex:1 0 50%;
 }
 
-.personal__nav li {
-    padding: 2%;  
-    width: 30%;
-    font-size: 16px;
-    font-weight: 520;   
+.personal__nav div {
+    padding: 0px 0px 1rem 0px;
+}
+
+.personal__settings::before {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 20%;
+    background-color: white;
+    margin: -.5rem 0px 0px 0px;
+}
+
+.personal__btn {
+    padding: .5rem;
+    background-color: bisque;
+    border-radius: 1rem;
+    text-align: center;
+}
+
+.personal__btn:hover {
+    cursor: pointer;
+    background-color: white;
+    transition: all 1s ease;
+}
+
+.personal__setting {
+    color:white;
+    font-size: 18px;
+}
+
+
+.personal__item {
+    font-size: 18px;
+}
+
+.personal__detail:hover {
+    cursor: pointer;
+}
+
+.personal__detail_good {
+    color: green;
+}
+
+.personal__detail_bad {
+    color: violet;
 }
 
 .personal__nav li:hover {
-    outline: 2px solid burlywood;
+    color:white;
     cursor: pointer;
 }
 
@@ -295,12 +351,10 @@ li {
 }
 
 .personal__data {
-    display: flex;
-    width: 20%;
-    justify-content: space-between;
-    margin: 2% 0px 0px 0px;
-    font-size: 18px;
-    font-weight: 520;
+    margin: 0px 0px 0px 1rem;
+    flex:1 0 50%;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 
@@ -309,8 +363,8 @@ li {
 /* LOGIN AND REG ON*/
 
 .logingAndReg {
-    display: flex;
-    height: 250px;
+    display: flex;      
+    margin:0px 0px 1rem 0px;
 }
 
 .Login {
@@ -328,8 +382,9 @@ li {
 
 .logingAndReg input {
     width: 150px;
-    height: 25px;
+    height: 1.7rem;
     border-radius: 10px;
+    font-size: 16px;
 }
 
 .Login label {
@@ -354,6 +409,7 @@ li {
 .logingAndReg__btn:hover {
     cursor: pointer;
 }
+
 
 /* LOGIN AND REG OFF */
 

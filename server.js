@@ -39,7 +39,15 @@ app.post('/login', (req, res) => {
             }) : res.send('email')
         })
     }
-  
+})
+
+app.post('/order', (req, res) => {
+    const {id_car_mark, name_mark, id_user, DateAfter, Price, DateBefore} = req.body;
+    connectionLogin.query("Insert into `zakaz` (`id_car_mark`, `name_mark`, `id_user`, `DateAfter`, `DateBefore`, `price`) VALUES(?, ?, ?, ?, ?, ?)", [id_car_mark, name_mark, id_user, DateAfter, DateBefore,  Price]).then((result) => {
+        res.send('Add')
+    }).catch( err =>  {
+        console.error(err)
+    })
 })
 
 app.post('/register', (req, res) => {
