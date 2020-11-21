@@ -1,5 +1,5 @@
-import { orderPost } from "../../api/api";
-import { setOrder } from "../actions/order";
+import { orderPost, orderGet } from "../../api/api";
+import { setOrder, getOrder } from "../actions/order";
 
 let intialState = {
     history: [],
@@ -14,6 +14,11 @@ function order(state = intialState, action) {
                 ...state,
                 add: true,
             }
+        case "GET_ORDERS":
+            return {
+                ...state,
+                history: [...action.history],
+            }
         default: return state;
     }
 }
@@ -22,6 +27,13 @@ export const SetOrder = (values) => (dispatch) => {
     orderPost(values)
         .then((res) => {
             res && dispatch(setOrder())
+        })
+}
+
+export const SetHistoryOrders = (value) => (dispatch) => {
+    orderGet(value)
+        .then((res) => {
+            dispatch(getOrder(res))
         })
 }
 

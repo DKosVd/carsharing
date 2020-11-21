@@ -1,14 +1,21 @@
 import { LogOut } from '../store/reducers/loginpage';
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Details from './Datails';
+import { SetHistoryOrders } from '../store/reducers/order';
 
 function Login(res) {
     const dispatch = useDispatch();
+    const [active, setActive] = React.useState(false)
+    const { history } = useSelector(state => state.order)
     const LogOutButton = () => {
         dispatch(LogOut());
     }
-
+    const handlerSetOrders = () => {
+        setActive(!active);
+        dispatch(SetHistoryOrders(res.id));
+    }
+    console.log(history)
     return (
         <>
             <div className="main">
@@ -25,10 +32,10 @@ function Login(res) {
                         </div>
                         <div className="personal__nav">
                             <div className="personal__history"> 
-                                    <div className="personal__setting">История заказов</div>
-                                    <div className="personal__items">
-                                        {/* {[1, 2, 3].map(item => <Details/>)} */}
-                                    </div>
+                                    <div className="personal__setting" onClick={handlerSetOrders}>История заказов</div>
+                                    {active && <div className="personal__items">
+                                        {history.length ? history.map((item,index) => <Details key={`${item}__${index} `} {...item}/>): <p>Заказов нет</p>}
+                                    </div>}
                             </div>
                             <div className="personal__settings">
                                 <div  className="personal__setting">Настройки</div>

@@ -50,6 +50,15 @@ app.post('/order', (req, res) => {
     })
 })
 
+app.get('/orders/:id', (req, res) => {
+    const { id } = req.params;
+    connectionLogin.query("SELECT * FROM `zakaz` WHERE `id_user` = ?", [id]).then(([rows]) => {
+        rows.length ? res.send(rows) : res.send(null);
+    }).catch( err => {
+        console.error(err)
+    })
+})
+
 app.post('/register', (req, res) => {
     connectionLogin.execute("Select * from `users` where `email` = ?", [req.body.email]).then(([rows]) => {
         rows.length ? res.send('emailExist') : bcrypt.hash(req.body.password, 12).then((hash_pass) => {

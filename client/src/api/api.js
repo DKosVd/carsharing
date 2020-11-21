@@ -23,3 +23,7 @@ export const logout = () => {
 export const orderPost = (values) => {
     return axios.post('/order', values).then( res => res.data)
 }
+
+export const orderGet = (id) => {
+    return axios.get(`/orders/${id}`).then(res => res.data)
+}
