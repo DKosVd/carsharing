@@ -42,8 +42,12 @@ app.post('/login', (req, res) => {
 })
 
 app.post('/order', (req, res) => {
-    const {id_car_mark, name_mark, id_user, DateAfter, Price, DateBefore} = req.body;
-    connectionLogin.query("Insert into `zakaz` (`id_car_mark`, `name_mark`, `id_user`, `DateAfter`, `DateBefore`, `price`) VALUES(?, ?, ?, ?, ?, ?)", [id_car_mark, name_mark, id_user, DateAfter, DateBefore,  Price]).then((result) => {
+    const {id_car_mark, name_mark, id_user, DateAfter, Price, DateBefore, fullname} = req.body;
+    connectionLogin.query("Insert into `zakaz` (`id_car_mark`, `name_mark`, `id_user`, `DateAfter`, `DateBefore`, `price`, `fullname`) VALUES(?, ?, ?, ?, ?, ?, ?)", [id_car_mark, name_mark, id_user, DateAfter, DateBefore, Price, fullname]).then((result) => {
+        connection.query('Update `autos` SET count=count-1 WHERE `fullname` = ?', [fullname], function(err, result) {
+            if(err) console.error(err)
+            console.log(`Count decrement ${fullname}`)
+        })
         res.send('Add')
     }).catch( err =>  {
         console.error(err)

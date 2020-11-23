@@ -10,3 +10,9 @@ export function getOrder(history) {
         history
     }
 }
+
+export function setNoAdd() {
+    return {
+        type: "SET_NO_ADD",
+    }
+}

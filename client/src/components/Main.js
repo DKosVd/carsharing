@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Cars from './Cars';
 import MyLoader from './PreloaderForCars';
 import { Setcookie } from '../store/reducers/loginpage';
+import Tab from './Tab';
 
 
 function Main(props) {
@@ -15,6 +16,8 @@ function Main(props) {
         dispatch(setCars(tabs[active]))
         dispatch(Setcookie())
     }, [active])
+
+
     return (
         <div className="main"> 
         <div className="container">
@@ -28,7 +31,7 @@ function Main(props) {
             <div className="main__autopark">
                 <div className="main__title">Автопарк</div>
                 <div className="main__tabs">
-                    {tabs && tabs.map( (tab, index) => <div className={`${'main__tab'} ${active === index ? 'main__tab_choose': ''}`} onClick={() => setActive(index)}  key={`${tab}__${index}`}>{ tab }</div>)}
+                    {tabs.map( (tab, index) => <Tab key={`${index}__${tab}`} tab={tab} handleClickActive={() => setActive(index)} className={active === index ? 'main__tab_choose': ''}/>)}
                 </div>
                 
                 <div className="main__cars">

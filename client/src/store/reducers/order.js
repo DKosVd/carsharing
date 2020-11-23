@@ -1,5 +1,5 @@
 import { orderPost, orderGet } from "../../api/api";
-import { setOrder, getOrder } from "../actions/order";
+import { setOrder, getOrder, setNoAdd } from "../actions/order";
 
 let intialState = {
     history: [],
@@ -12,12 +12,17 @@ function order(state = intialState, action) {
         case "SET_ORDER": 
             return {
                 ...state,
-                add: true,
+                Add: true,
             }
         case "GET_ORDERS":
             return {
                 ...state,
                 history: [...action.history],
+            }
+        case "SET_NO_ADD":
+            return {
+                ...state,
+                Add: false,
             }
         default: return state;
     }

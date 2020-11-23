@@ -4,11 +4,9 @@ import Modal from './Modal';
 function Cars(props) {
     const [active, setActive] = React.useState(false);
     const handleClick = (e) => {
-            console.log(e.target.parentElement)
             setActive(true)
     }
 
-    
     const closeModal = (e) => {
         if(e.target.classList.value === 'ModalWindow' ||  e.target.classList.value === 'close') {
             setActive(false)
@@ -18,7 +16,7 @@ function Cars(props) {
         
             <div className="main__car car">
                 <div className="car__img">
-                    <img src="" alt="car" />
+                    <img className="car__seting" alt="car" src={props.src_img}/>
                 </div>
                 <div className="descriptions" id={props.id_car_mark}>
                     <p>Название: {props.fullname}</p>
