@@ -183,6 +183,10 @@ li {
     max-height: 350px;
 }
 
+.preload {
+    display: flex;
+}
+
 .car__img {
     width: 200px;
     min-height: 200px;
@@ -321,6 +325,10 @@ li {
     font-size: 18px;
 }
 
+.personal__history_item {
+    color:white;
+    font-size: 18px;
+}
 
 .personal__item {
     font-size: 18px;

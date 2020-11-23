@@ -15,7 +15,7 @@ function Cars(props) {
         }
     } 
     return (
-        <>
+        
             <div className="main__car car">
                 <div className="car__img">
                     <img src="" alt="car" />
@@ -27,7 +27,7 @@ function Cars(props) {
                     {active && <Modal  close={closeModal} {...props}/>}
                 </div>
             </div>
-        </>
+   
     )
 }
 

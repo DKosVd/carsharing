@@ -3,7 +3,7 @@ import { setCars } from '../store/reducers/mainpage';
 import ItemForMain from './ItemForMain';
 import { useDispatch, useSelector } from 'react-redux';
 import Cars from './Cars';
-import Preloader from './Preloader';
+import MyLoader from './PreloaderForCars';
 import { Setcookie } from '../store/reducers/loginpage';
 
 
@@ -30,12 +30,13 @@ function Main(props) {
                 <div className="main__tabs">
                     {tabs && tabs.map( (tab, index) => <div className={`${'main__tab'} ${active === index ? 'main__tab_choose': ''}`} onClick={() => setActive(index)}  key={`${tab}__${index}`}>{ tab }</div>)}
                 </div>
-                {
-                !isLoading ? <Preloader/> : 
+                
                 <div className="main__cars">
-                    {cars && cars.map( (car, index) => <Cars key={`${car}__${index}`} {...car} button={true} />)}
+                    { !isLoading ? Array(8).fill(null).map(item => <div className="main__car car"><MyLoader  /></div>): 
+                    <>{cars && cars.map( (car, index) => <Cars key={`${car}__${index}`} {...car} button={true} />)}</>
+                        }
                 </div>
-                }
+                
             </div>
         </div>
     </div>  
