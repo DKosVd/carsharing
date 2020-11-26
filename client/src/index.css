@@ -283,6 +283,14 @@ li {
     margin: 0;
 }
 
+.personal__item_success {
+    color: lightgreen;
+}
+
+.personal__item_wrong {
+    color: rgb(87, 11, 11);
+}
+
 
 
 .personal__items {
