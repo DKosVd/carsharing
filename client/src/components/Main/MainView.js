@@ -1,23 +1,11 @@
 import React from 'react'
-import { setCars } from '../store/reducers/mainpage';
-import ItemForMain from './ItemForMain';
-import { useDispatch, useSelector } from 'react-redux';
-import Cars from './Cars';
-import MyLoader from './PreloaderForCars';
-import { Setcookie } from '../store/reducers/loginpage';
-import Tab from './Tab';
+import ItemForMain from '../ItemForMain';
+import Cars from '../Cars/Cars';
+import MyLoader from '../Preloaders/PreloaderForCars';
+import Tab from '../Tab';
 
 
-function Main(props) {
-    const [active, setActive] = React.useState(0); //state redux
-    const { cars, isLoading, tabs} = useSelector(state => state.mainpage);
-    const dispatch = useDispatch();
-    React.useEffect(() => {
-        dispatch(setCars(tabs[active]))
-        dispatch(Setcookie())
-    }, [active])
-
-
+function MainView({isLoading, cars, tabs, setActive, active}) {
     return (
         <div className="main"> 
         <div className="container">
@@ -46,4 +34,4 @@ function Main(props) {
     )
 }
 
-export default Main;
+export default MainView;

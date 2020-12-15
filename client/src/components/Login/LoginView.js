@@ -1,33 +1,8 @@
-import { LogOut } from '../store/reducers/loginpage';
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import Details from './Datails';
-import { SetHistoryOrders } from '../store/reducers/order';
+import Details from '../Details/Details';
 
-function Login(res) {
-    const dispatch = useDispatch();
-    const [active, setActive] = React.useState(false)
-    const { history } = useSelector(state => state.order)
-    const itemHistory = React.useRef();
-    const LogOutButton = () => {
-        dispatch(LogOut());
-    }
-    const handlerHistoryOrder = React.useCallback(() => {
-        dispatch(SetHistoryOrders(res.id));
-        console.log('1Request...')
-    }, [res.id])
 
-    React.useEffect( () => {
-        const { current } = itemHistory;
-        current.addEventListener('click', handlerHistoryOrder)
-        console.log(history)
-        history.length && current.removeEventListener('click', handlerHistoryOrder)
-    }, [history])
-
-    const handlerSetOrders = () => {
-        setActive(!active);
-    }
-    
+function LoginView({name, itemHistory, handlerSetOrders, active, history, LogOutButton}) {
     return (
         <>
             <div className="main">
@@ -39,7 +14,7 @@ function Login(res) {
                             </div>
                             <div className="personal__info">
                                 <p>Личные данные</p>
-                                <p><span className="personal__info personal__info_name">{res.name}</span></p>
+                                <p><span className="personal__info personal__info_name">{name}</span></p>
                             </div>
                         </div>
                         <div className="personal__nav">
@@ -67,4 +42,4 @@ function Login(res) {
     )
 }
 
-export default Login;
+export default LoginView;

@@ -1,9 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
-function Header(props) {
-    const  { isAuth }  = useSelector(state => state.loginpage)
+function HeaderView({isAuth}) {
     return (
         <header className="header">
             <div className="container">
@@ -30,4 +28,4 @@ function Header(props) {
     )
 }
 
-export default Header;
+export default HeaderView;

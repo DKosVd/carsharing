@@ -1,24 +1,9 @@
 import React from 'react';
 import { Formik } from 'formik';
-import * as yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUsers, registerNewUser } from '../store/reducers/loginpage';
-import Login from './Login';
+import { setUsers, registerNewUser } from '../../store/reducers/loginpage';
+import Login from '../Login/Login';
 
-const LoginAndRegister = () => {
-    const validationSchema = yup.object().shape({
-        email: yup.string().email('Введите верный email').required('Обязательное поле'),
-        password: yup.string().typeError('Должно быть строкой').required('Обязательное поле'),
-    })
-
-    const valSchema = yup.object().shape({
-        email: yup.string().email('Введите верный email').required('Обязательное поле'),
-        password: yup.string().typeError('Должно быть строкой').required('Обязательное поле'),
-        name: yup.string().required('Обязательное поле'),
-    })
-    const dispatch = useDispatch();
-    const state = useSelector(state => state.loginpage)
-
+const LoginAndRegisterView = ({valSchema, validationSchema, dispatch, state}) => {
     return (
         <div className="container">
             <div className="logingAndReg">
@@ -129,4 +114,4 @@ const LoginAndRegister = () => {
     )
 }
 
-export default LoginAndRegister;
+export default LoginAndRegisterView;

@@ -1,8 +1,7 @@
 import React from 'react'
 import Footer from '../components/Footer'
-import Header from '../components/Header'
-import Login from '../components/Login'
-import LoginAndRegister from '../components/LoginAndRegister'
+import Header from '../components/Header/Header'
+import LoginAndRegister from '../components/LoginAndRegister/LoginAndRegister';
 
 function LoginPage(props) {
     
