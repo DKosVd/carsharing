@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const connection = require('./db/db');
 const connectionLogin = require('./db/db_login');
 const session = require('express-session');
+const { UserCtrl } = require('./backend/controllers/authController');
 
 
 
@@ -18,28 +19,7 @@ app.use(session({
     
 }));
 
-app.post('/login', (req, res) => {
-    const { email, password} = req.body;
-    if(req.session.authenticated) {
-        res.send(req.session.user)
-    } else {
-        connectionLogin.execute("Select * from `users` where `email` = ?", [email]).then(([rows]) => {
-            rows.length  ?  bcrypt.compare(password, rows[0].password).then(result => {
-                if( result ) {
-                    const {id, name} = rows[0];
-                    req.session.authenticated = true;
-                    req.session.user = {
-                        id,
-                        name,
-                    }
-                    res.send(rows[0])
-                } else {
-                    res.send('password')
-                }
-            }) : res.send('email')
-        })
-    }
-})
+app.post('/login', UserCtrl.login)
 
 app.post('/order', (req, res) => {
     const {id_car_mark, name_mark, id_user, DateAfter, Price, DateBefore, fullname} = req.body;

@@ -14,13 +14,11 @@ function Login(res) {
     }
     const handlerHistoryOrder = React.useCallback(() => {
         dispatch(SetHistoryOrders(res.id));
-        console.log('1Request...')
     }, [res.id])
 
     React.useEffect( () => {
         const { current } = itemHistory;
         current.addEventListener('click', handlerHistoryOrder)
-        console.log(history)
         history.length && current.removeEventListener('click', handlerHistoryOrder)
     }, [history])
 

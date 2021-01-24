@@ -1,0 +1,153 @@
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .headerForAdmin {
+    margin: 10px 0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    background-color: wheat;
+    border-radius: 10px;
+    font-size: 20px;
+    background-color: rgb(191, 186, 173);
+  }
+  
+  
+  .mainAdmin {
+    display: flex;
+    height: 100vh;
+  }
+
+  
+  
+  .nav__elems {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 20px;
+  }
+  
+  .nav__elem {
+    padding: 15px;
+    width: 50%;
+    list-style: none;
+    margin: 10px 0px;
+    border-radius: 10px;
+    background-color: rgb(191, 186, 173);
+    text-align: center;
+  }
+  
+  .nav__elem:hover {
+    cursor: pointer;
+  }
+  
+  .contentAdmin {
+    width: 900px;  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .content__form {
+    width: 60%;
+    height: auto;
+    margin: 10px 0px 100px 0px;
+  }
+  
+  .content__fieldset {
+    width: 500px;
+    padding: 15px;
+    box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+    border:0px;
+    border-radius: 10px;
+    background-color: rgb(191, 186, 173);
+  }
+  
+  .content__fieldset p label {
+    width:100px;
+  }
+  
+  .content__title {
+    margin: 0px 0px 10px 0px;
+  }
+  
+  .content__users {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  input[type="submit"] { 
+    padding: 10px;
+    margin: 20px 0px;
+    border-radius: 10px;
+    background-color: #293133;
+    background-color: white;
+    border: 0px;
+  }
+  
+  input[type="submit"]:hover {
+    color: white;
+    background-color: rgb(191, 186, 173);
+    cursor: pointer;
+  }
+  
+  table tr, th, td {
+    padding: 10px;
+  }
+  
+  th {
+    background-color: rgba(0,0,0,.15);
+  }
+  
+  tr:hover {
+    background-color: rgba(0,0,0,.075);
+  }
+  
+  table {
+    background-color: rgb(191, 186, 173);
+    border-radius: 10px;
+    border-collapse: collapse;
+  }
+  
+  .pagination {
+    margin: 30px 0px 30px 0px;
+    display:flex;
+    height: 25px;
+  }
+  
+  .pagination div {
+    border: 1px solid rgb(168, 168, 218);
+    color: #fff;
+    text-align:center;
+    width: 30px;
+  }
+  
+  .pagination div:hover {
+    cursor: pointer;
+  }
+  
+  .pagination div span {
+    padding: 5px;
+  }
+  
+  .pagination__active {
+    color:white;
+    background-image: linear-gradient(to right, #926afe, #bd9aff);
+  }
+  

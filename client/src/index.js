@@ -10,8 +10,8 @@ import store from '../src/store/reducers/index';
 ReactDOM.render(
   <Provider store={store}>
   <BrowserRouter>
-    <App />,
-  </BrowserRouter>,
+    <App />
+  </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );

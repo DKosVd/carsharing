@@ -5,6 +5,7 @@ let initialState = {
     id: null, 
     name: null,
     isAuth: false,
+    isAdmin: false,
     errorWithPassword: '',
     errorWithEmail: '',
     emailExist: '',

@@ -13,6 +13,7 @@ a {
 body {
     height: 100%;
     font-family: 'Goldman', cursive;
+    background-color:#4C5866 ;
 }
 
 .main__tab_choose {
@@ -34,7 +35,6 @@ li {
     flex:1 0  auto;
     margin: 0 auto;
     min-height: 100vh;
-    background-color:#4C5866 ;
 }
 
 .container {
@@ -340,6 +340,7 @@ li {
 .personal__item {
     font-size: 18px;
 }
+
 
 .personal__detail:hover {
     cursor: pointer;
