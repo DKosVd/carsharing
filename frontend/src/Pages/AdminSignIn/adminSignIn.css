@@ -1,0 +1,50 @@
+.wrapper_admin_form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: lightgrey;
+}
+
+.admin_form {
+    height: auto;
+    max-height: 50%;
+    flex-grow: 0;
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 10px 0px 10px;
+}
+
+.admin_form input {
+    width: 200px;
+    margin: 10px 0px 0px 0px;
+    height: 20px;
+    border: 1px solid black;
+}
+
+.admin_form h3 {
+    text-align: center;
+}
+
+
+.admin_form button {
+    margin: 10px 0px 10px 0px;
+    width: 60px;
+    color: #ffffff;
+    line-height: 20px;
+    background-color: rgb(106, 156, 106);
+}
+
+.admin_form form div {
+    margin: 0px 0px 10px 0px;
+}
+
+.error {
+    color: red;
+}
