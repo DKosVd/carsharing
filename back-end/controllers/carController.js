@@ -1,13 +1,23 @@
 import { pool } from '../core/dbConnection.js';
 import { queryWithCheck } from '../utils/queryCheck.js'
 import { validationResult } from 'express-validator';
+import { Auto } from '../models/auto.js';
+import { Price } from '../models/price.js';
+import { MarkAuto } from '../models/mark_of_auto.js';
+import { TypeAuto } from '../models/type_of_auto.js';
+import { Drive } from '../models/drive.js';
+import { Rudder } from '../models/rudder.js';
+import { Transmission } from '../models/transmission.js';
 
 class carController {
 
     async getAutos(_, res) {
         try {
-            const [autos] = await pool.execute("SELECT auto.id_auto, auto.is_present, auto.model, auto.src_img, price.per_hour,  mark_of_auto.name_mark, type_of_auto.name_type, drive.name_drive FROM `auto` INNER JOIN price ON price.id_price = auto.id_price INNER JOIN mark_of_auto ON mark_of_auto.id_mark = auto.id_mark INNER JOIN type_of_auto ON auto.id_type = type_of_auto.id_type INNER JOIN drive ON drive.id_drive = auto.id_drive INNER JOIN rudder ON rudder.id_rudder = auto.id_rudder")
-            if(autos.length) {
+            const autos = await Auto.findAll({
+                attributes: ['id_auto', 'is_present', 'model', 'src_img'],
+                include: [ {model: Price, attributes: ['per_hour']}, {model: MarkAuto}, {model: TypeAuto}, {model: Drive} ]
+            })
+            if(autos) {
                 res.status(200).json({
                     status: 'accesss',
                     data: autos
@@ -27,11 +37,17 @@ class carController {
     async getAuto(req, res) {
         try {
             const idAuto = req.params.id
-            const [auto] = await pool.execute("SELECT auto.id_auto, transmission.name_trans, auto.is_present, auto.model, auto.seats, auto.src_img, price.per_hour, price.per_day, mark_of_auto.name_mark, type_of_auto.name_type, drive.name_drive, rudder.name_rudder FROM `auto` INNER JOIN price ON price.id_price = auto.id_price INNER JOIN mark_of_auto ON mark_of_auto.id_mark = auto.id_mark INNER JOIN type_of_auto ON auto.id_type = type_of_auto.id_type INNER JOIN drive ON drive.id_drive = auto.id_drive INNER JOIN rudder ON rudder.id_rudder = auto.id_rudder INNER JOIN transmission ON transmission.id_trans = auto.id_trans  where id_auto = ?", [idAuto])
-            if( auto.length ) {
+            const auto = await Auto.findOne({
+                attributes: ['id_auto', 'is_present', 'model', 'src_img', 'seats'],
+                include: [ {model: Price, attributes: ['per_hour']}, {model: MarkAuto}, {model: TypeAuto}, {model: Drive}, {model: Rudder}, {model: Transmission} ],
+                where: {
+                    id_auto: idAuto
+                }
+            })
+            if( auto ) {
                 res.status(200).json({
                     status: "success",
-                    data: auto[0]
+                    data: auto
                 })
             } else {
                 res.status(404).send();

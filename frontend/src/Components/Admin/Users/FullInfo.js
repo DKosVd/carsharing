@@ -8,6 +8,7 @@ import { Loading } from '../../../store/reducers/user/state';
 import Edituser from './EditUser';
 import { Goback } from '../GoBack';
 import { RowCars } from './RowCars';
+import { prepareDate } from '../../../utils/prepareDate';
 
 export function Fullinfo(props) {
     const { id } = useParams();
@@ -86,22 +87,22 @@ export function Fullinfo(props) {
                                 </div>
                                 <p>E-mail: {user.email}</p>
                                 <p>Никнейм: {user.nickname}</p>
-                                <p>Возраст: {new Date().getFullYear() - new Date(`${user.age}`).getFullYear()}</p>
+                                <p>Возраст: {prepareDate(new Date(),new Date(`${user.age}`))}</p>
                             </div>
                             <div className="user_info user_orders user_text_align_center column">
                                 <h4>Всего заказов</h4>
-                                <p>{user.quantity}</p>
+                                <p>{user.carts?.length}</p>
                             </div>
                             <div className="user_info user_orders_price user_text_align_center column">
                                 <h4>Заказов на сумму</h4>
-                                <p>{user.total || 0} ₽</p>
+                                <p>{user.carts?.reduce((acc, val) => acc +  (+val.cost), 0) || 0} ₽</p>
                             </div>
                         </div>
                     </div>
                     <div>
                         <h2>Заказы пользователя</h2>
                         <div className="cars">
-                            {user.orders?.length ? user.orders.map( (order, i) => <RowCars key={`${order.model}__${i}`} {...order} isOrder={true}/>) : <p>Пока заказов нет</p>}
+                            {user.carts?.length ? user.carts.map( (order, i) => <RowCars key={`${order.model}__${i}`} {...order} isOrder={true}/>) : <p>Пока заказов нет</p>}
                         </div>
                     </div>
                 </Route>

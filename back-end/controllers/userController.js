@@ -1,11 +1,16 @@
 import dotenv from 'dotenv'
 dotenv.config();
+import {Sequelize} from 'sequelize'
 import { pool } from '../core/dbConnection.js';
 import { validationResult } from 'express-validator';
 import { generateHashMD5 } from '../utils/generateHash.js';
 import mailer from '../core/mailer.js';
 import jwt from 'jsonwebtoken'
 import { jwtSignRole } from '../utils/jwtSignRole.js';
+import { User } from '../models/user.js';
+import { Auto, Cart } from '../models/cart.js';
+import { MarkAuto } from '../models/mark_of_auto.js';
+const {Op} = Sequelize;
 
 
 class UserController {
@@ -35,7 +40,11 @@ class UserController {
     async getUsers(req, res) {
         try {
             if(Object.keys(req.query).length !== 0) {
-                const [usersBySort] = await pool.execute(`Select * from user where id_role = 1 and isBanned = false order by ${req.query.name} ${req.query.sort}`)
+                const usersBySort = await User.findAll( {
+                    where: {[Op.and]: [{id_role: 1, isBanned: false}]},
+                    order: [[req.query.name, req.query.sort]]
+                   
+                })
                 if(usersBySort.length) {
                     res.status(200).json({
                         status: 'success',
@@ -47,8 +56,13 @@ class UserController {
                     return;
                 }
             }
-            const [users] = await pool.execute("Select * from user where id_role = 1 and isBanned = false");
-            if (users.length) {
+            const users = await User.findAll( {
+                where: {[Op.and]: [{id_role: 1, isBanned: false}]},
+                // attributes: ['id_user', 'confirmed', 'first_name'],
+                // include: [{model: Role, required: true}]
+            })
+    
+            if (users) {
                 res.status(200).json({
                     status: 'success',
                     data: users
@@ -70,17 +84,27 @@ class UserController {
         //TODO: Вся информация о пользователе(т.е запрос на получение все информации, либо сделать отдельный запрос для получения заказов каждого пользователя)
         try {
             const idOfUser = req.params.id
-            const [user] = await pool.execute('SELECT user.id_user, user.confirmed, user.first_name, user.email, user.age, user.sur_name, user.nickname, COUNT(`cart`.`order_date`) as quantity, SUM(`cart`.`cost`) as total FROM `user` LEFT JOIN `cart` ON `cart`.`id_user` = `user`.`id_user` where user.id_user = ? GROUP BY user.id_user', [idOfUser]);
-            const [orders] = await pool.execute('SELECT `cart`.`cost`, `cart`.`order_date`, `cart`.`return_date`, `mark_of_auto`.`name_mark`, `auto`.`id_auto`, `auto`.`model`, `auto`.`src_img` from `user` INNER JOIN `cart` ON `cart`.`id_user` = `user`.`id_user` INNER JOIN `auto` ON `auto`.`id_auto` = `cart`.`id_avto` INNER JOIN `mark_of_auto` ON `mark_of_auto`.`id_mark` = `auto`.`id_mark` WHERE `user`.`id_user` = ?', [idOfUser])
-            if (user.length) {
+            const user = await User.findOne({
+                attributes: {
+                    exclude: ['password', 'confirmed_hash', 'isBanned', 'id_role'],
+                },
+                where: {
+                    id_user: idOfUser
+                },
+                include: {model: Cart,  attributes: {
+                    exclude: ['id_user', 'id_cart', 'id_avto'],
+                },include: {
+                    model: Auto,   attributes: {
+                        exclude: ['id_mark', 'id_trans', 'id_drive', 'id_rudder', 'id_type', 'id_price'],
+                    }, include: {
+                        model: MarkAuto
+                    }
+                }}
+            })
+            if (user) {
                 res.status(200).json({
                     status: 'success',
-                    data: {
-                        ...user[0],
-                        orders: [
-                            ...orders
-                        ]
-                    }
+                    data: user
                 })
             } else {
                 res.status(404).send();

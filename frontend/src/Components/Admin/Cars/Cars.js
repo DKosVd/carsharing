@@ -1,5 +1,5 @@
 import React from 'react'
-import { RowCars } from '../Users/RowCars'
+import { CarsRow } from '../Cars/CarRows.js'
 import { CarInDetail } from './CarInDetail'
 import { Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,7 +49,7 @@ export default function Cars(props) {
                 <Route exact path="/admin/autos">
                     <LiveSearch cb={Livesearch} datas={autos} paramsFilterBy={'model'}/>
                     <div className="cars">
-                        {filterAutos && filterAutos.map(auto => <RowCars key={`${auto.id_auto}__${auto.model}`} {...auto} />)}
+                        {filterAutos && filterAutos.map(auto => <CarsRow key={`${auto.id_auto}__${auto.model}`} {...auto} />)}
                     </div>
                 </Route>
                 <Route path={"/admin/autos/:id"} component={CarInDetail}/>

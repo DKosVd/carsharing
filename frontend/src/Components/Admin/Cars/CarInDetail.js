@@ -6,7 +6,7 @@ import { clear, fetchCar } from '../../../store/actions/car/car';
 import { Loading } from '../../../store/reducers/car/state';
 import { CircularProgress } from '@material-ui/core';
 
-export function CarInDetail(props) {
+export function CarInDetail() {
     const { id } = useParams();
     const dispatch = useDispatch()
     const auto = useSelector(state => state.car.car)
@@ -38,27 +38,27 @@ export function CarInDetail(props) {
                             <tbody>
                                 <tr>
                                     <th>Трансмиссия</th>
-                                    <td>{auto.name_trans}</td>
+                                    <td>{auto.transmission?.name_trans}</td>
                                 </tr>
                                 <tr>
                                     <th>Привод</th>
-                                    <td>{auto.name_drive}</td>
+                                    <td>{auto.drive?.name_drive}</td>
                                 </tr>
                                 <tr>
                                     <th>Руль</th>
-                                    <td>{auto.name_rudder}</td>
+                                    <td>{auto.rudder?.name_rudder}</td>
                                 </tr>
                                 <tr>
                                     <th>Количество мест</th>
-                                    <td>{auto.seats}</td>
+                                    <td>{auto?.seats}</td>
                                 </tr>   
                                 <tr>
                                     <th>Тип кузова</th>
-                                    <td>{auto.name_type}</td>
+                                    <td>{auto.type_of_auto?.name_type}</td>
                                 </tr>
                                 <tr>
                                     <th>Цена за час</th>
-                                    <td>{auto.per_hour}</td>
+                                    <td>{auto.price?.per_hour}</td>
                                 </tr>
                                 <tr>
                                     <th>В наличии</th>
