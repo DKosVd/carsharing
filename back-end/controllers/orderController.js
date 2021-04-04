@@ -1,13 +1,15 @@
 import { pool } from '../core/dbConnection.js';
-
+import { Cart } from '../models/cart.js';
+import { Auto } from '../models/index.js';
+import { User } from '../models/index.js';
 
 
 class OrderController {
 
     async allOrder(_, res) {
         try {
-            const [orders] = await pool.execute('SELECT `cart`.`id_cart`, `cart`.`order_date`, `cart`.`return_date`, `cart`.`cost` FROM `cart`')
-            if(orders.length) {
+            const orders = await Cart.findAll({})
+            if(orders) {
                 res.status(200).json({
                     status: 'success', 
                     data: orders
@@ -24,8 +26,13 @@ class OrderController {
     async orderById(req, res) {
         try {
             const { id } = req.params;
-            const [order] = await pool.execute('SELECT `cart`.`id_cart`, `cart`.`order_date`, `cart`.`return_date`, `cart`.`cost`, `user`.`first_name`, `user`.`sur_name`, `user`.`email`, `user`.`nickname`, `user`.`id_user`, `auto`.`id_auto`, `auto`.`model`, `auto`.`src_img` FROM `cart` INNER JOIN `user` ON `user`.`id_user` = `cart`.`id_user` INNER JOIN `auto` ON `auto`.`id_auto` = `cart`.`id_avto` WHERE `cart`.`id_cart` = ?', [id])
-            if(order.length) {
+            const order = await Cart.findOne({
+                include: [{ model: User, attributes: ['first_name', 'sur_name', 'email', 'nickname']}, {model: Auto, attributes: ['model', 'src_img']}],
+                where: {
+                    id_cart: id
+                },
+            })
+            if(order) {
                 res.status(200).json({
                     status: 'success', 
                     data: order

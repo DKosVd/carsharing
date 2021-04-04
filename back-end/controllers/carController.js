@@ -9,6 +9,7 @@ import { Drive } from '../models/drive.js';
 import { Rudder } from '../models/rudder.js';
 import { Transmission } from '../models/transmission.js';
 
+
 class carController {
 
     async getAutos(_, res) {
@@ -64,8 +65,10 @@ class carController {
     async getAutoOfModel(req, res) {
         try {
             const { model } = req.params;
-            const [auto] = await pool.execute('Select * from auto where model = ?', [model])
-            if(auto.length) {
+            const auto = User.findAll({
+                where: {model: model}
+            })
+            if(auto) {
                 res.status(200).json({
                     status: 'success',
                     data: auto
@@ -139,7 +142,6 @@ class carController {
     async deleteAuto(req, res) {
         try {
             const idAuto = req.params.id
-            console.log(idAuto)
             const [auto] = await pool.execute("Delete from auto where id_auto = ?", [idAuto])
             if( auto.affectedRows ) {
                 res.status(200).json({

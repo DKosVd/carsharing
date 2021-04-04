@@ -1,30 +1,5 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import {Sequelize} from 'sequelize'
-import { Auto, MarkAuto, User } from './models/index.js'
-import { Cart } from './models/index.js'
-//TODO: Разобрать запрос(заказ + пользователь)
-try {
-
-    const a = await Cart.findAll({
-        include: [{model: User,    
-                // include: [[Sequelize.fn("COUNT", Sequelize.col("cart.order_date")), "countOrders"]]
-          }, {model: Auto}],
-        group : ['user.id_user'],
-        where: {
-            id_cart: '3' //id_user
-        },
-        attributes: {
-            include: [ [Sequelize.fn("COUNT", Sequelize.col("cart.order_date")), "countOrders"], [Sequelize.fn("SUM", Sequelize.col("cart.cost")), "total"] ],
-        },
-    })
-    // const b = await User.findAll({
-    //     include: [{model: Role,  required: true}]
-    // // })
-    // console.log(JSON.stringify(b, null, 2))
-} catch(err) {
-    console.log(err.message)
-}
 import express from 'express';
 import'./core/dbConnection.js'
 import { carCtrl } from './controllers/carController.js';

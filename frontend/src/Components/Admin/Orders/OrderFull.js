@@ -5,14 +5,14 @@ import { opt } from '../../../utils/capitalizeAndOpt';
 import { Goback } from '../GoBack';
 
 
-export function OrderFull(props) {
+export function OrderFull() {
     const { id } = useParams();
     const history = useHistory();
     const [data, setData] = React.useState({});
     React.useEffect(() => {
         async function getFullInfo() {
             const { data } = await axios.get(`/orders/${id}`)
-            setData(...data.data)
+            setData(data.data)
         }
         getFullInfo();
     }, [])
@@ -24,7 +24,6 @@ export function OrderFull(props) {
     const handleGoToCar = () => {
         history.push(`/admin/autos/${data.id_auto}`)
     }
-    console.log(data)
     return (
         <div>
             <h2>Подробнее о заказе</h2>
@@ -38,15 +37,15 @@ export function OrderFull(props) {
             </div>
             <div className="order_size" onClick={handleGoToUser}>
                 <p className="order_title">Арендатор</p>
-                <span className="order_text">{data.first_name} {data.sur_name}</span>
-                <span className="order_text">e-mail: {data.email}</span>
-                <span className="order_text">Никнейм {data.nickname}</span>
+                <span className="order_text">{data.first_name} {data.user?.sur_name}</span>
+                <span className="order_text">e-mail: {data.user?.email}</span>
+                <span className="order_text">Никнейм {data.user?.nickname}</span>
             </div>
             <div className="order_size" onClick={handleGoToCar}>
                 <p className="order_title">Автомобиль</p>
-                <span className="order_text">{data.model}</span>
+                <span className="order_text">{data.auto?.model}</span>
                 <div className="order_car_img ">
-                    <img src={data.src_img}/>
+                    <img src={data.auto?.src_img}/>
                 </div>
             </div>
             </div>

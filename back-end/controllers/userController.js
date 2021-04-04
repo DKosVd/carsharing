@@ -19,9 +19,11 @@ class UserController {
     async verifyUser(req, res) {
         try {
             const hash = req.query.hash
-            const [user] = await pool.execute('Select * from user where confirmed_hash = ?', [hash])
-            if (user.length) {
-                await pool.execute('Update user Set confirmed = true where confirmed_hash = ? ', [hash])
+            const user = await User.findOne({
+                where: {confirmed_hash: hash}
+            })
+            if (user) {
+                await User.update({ confirmed: true }, { where: {confirmed_hash: hash} })
                 res.status(200).json({
                     status: 'success'
                 })
@@ -81,7 +83,6 @@ class UserController {
     }
 
     async getUser(req, res) {
-        //TODO: Вся информация о пользователе(т.е запрос на получение все информации, либо сделать отдельный запрос для получения заказов каждого пользователя)
         try {
             const idOfUser = req.params.id
             const user = await User.findOne({
@@ -147,9 +148,11 @@ class UserController {
                 })
                 return;
             }
-            console.log(req.body)
-            const [user] = await pool.execute('Select * from user where email = ?', [req.body.email]);
-            if (user.length) {
+            const user = await User.findOne({
+                where: {email: req.body.email}
+            }
+            )
+            if (user) {
                 res.status(409).json({
                     status: 'Email Already in use'
                 })
@@ -162,8 +165,8 @@ class UserController {
                 confirmed_hash: generateHashMD5(req.body.email + process.env.SECRET_KEY)
             }
             delete data.passwordConfirm
-            const [newUser] = await pool.execute('Insert into user (first_name, sur_name, email, password, nickname, age, confirmed_hash) values(?, ?, ?, ?,?, ?, ?)', [data.first_name, data.sur_name, data.email, data.password, data.nickname, data.age, data.confirmed_hash])
-            if (newUser.affectedRows) {
+            const userNew = await User.create(data)
+            if (userNew) {
                 res.status(200).json({
                     status: 'success',
                     data: data
@@ -205,8 +208,8 @@ class UserController {
     async deleteUser(req, res) {
         try {
             const idOfUser = req.params.id;
-            const [user] = await pool.execute('UPDATE user SET isBanned = true WHERE  id_user = ?', [idOfUser])
-            if (user.affectedRows) {
+            const userNew = await User.update({isBanned: true}, {where: {id_user: idOfUser}}) 
+            if (userNew) {
                 res.status(200).json({
                     status: 'success'
                 })
@@ -225,8 +228,8 @@ class UserController {
     async updateUser(req, res) {
         try {
             const updateInfo = req.body;
-            const [user] = await pool.execute('UPDATE user SET first_name = ?, sur_name = ?, email = ?, nickname = ?,  age = ?, confirmed = ? WHERE id_user = ?', [updateInfo.first_name, updateInfo.sur_name, updateInfo.email, updateInfo.nickname,updateInfo.age, updateInfo.confirmed, updateInfo.id_user])
-            if(user.affectedRows) {
+            const user = User.update(updateInfo, {where: {id_user: updateInfo.id_user}})
+            if(user) {
                 res.status(200).json({
                     status: 'success'
                 })
