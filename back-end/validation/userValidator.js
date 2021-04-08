@@ -20,8 +20,8 @@ export const registerValidation = [
         max: 40
     }).withMessage('Слишком длиная почта.'),
     body('password', 'Введите пароль').isString().isLength({
-        min: 7,
-    }).withMessage('Минимальное количество символов в пароле 7').custom( (password, {req}) => {
+        min: 6,
+    }).withMessage('Минимальное количество символов в пароле 6').custom( (password, {req}) => {
         if ( password !== req.body.passwordConfirm) {
             throw new Error('Пароли не совпадают')
         } else {

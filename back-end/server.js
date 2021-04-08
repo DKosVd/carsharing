@@ -13,6 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(passport.initialize());
 
+
 app.get('/auto', carCtrl.getAutos)
 app.post('/auto', autoValidation, carCtrl.addAuto)
 app.get('/auto/:id', carCtrl.getAuto);
@@ -32,6 +33,7 @@ app.delete('/user/:id', passport.authenticate('admin'), UserCtrl.deleteUser)
 
 app.get('/orders', OrderCtrl.allOrder);
 app.get('/orders/:id', OrderCtrl.orderById);
+app.patch('/orders/:id/proccess', passport.authenticate('admin'), OrderCtrl.orderProccess)
 
 app.post('/user/login', passport.authenticate('user-role'), UserCtrl.afterLogin)
 app.post('/admin', passport.authenticate('admin-role'), UserCtrl.afterLogin)

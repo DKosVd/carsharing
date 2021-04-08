@@ -9,6 +9,7 @@ import Edituser from './EditUser';
 import { Goback } from '../GoBack';
 import { RowCars } from './RowCars';
 import { prepareDate } from '../../../utils/prepareDate';
+import Alert from '../Alert'
 
 export function Fullinfo(props) {
     const { id } = useParams();
@@ -63,6 +64,11 @@ export function Fullinfo(props) {
             </div>
         )
     }
+
+    if(LoadingState === Loading.ERROR) {
+        return <Alert text={'Ошибка получения данных'} alert={'alert-danger'} />
+    }
+
 
 
     return (

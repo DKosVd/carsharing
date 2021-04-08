@@ -34,9 +34,8 @@ function* getUser({payload}) {
 
 function* registerUser({payload}) {
     try {
-        console.log('SAGA', payload)
         yield put(setStatusRegister(Register.REGISTERING))
-        const item = yield call(usersApi.registerUser, payload)
+        yield call(usersApi.registerUser, payload)
         yield put(setStatusRegister(Register.REGISTERED))
     } catch(err) {
         yield put(setStatusRegister(Register.ERROR))

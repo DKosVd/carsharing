@@ -45,7 +45,6 @@ class UserController {
                 const usersBySort = await User.findAll( {
                     where: {[Op.and]: [{id_role: 1, isBanned: false}]},
                     order: [[req.query.name, req.query.sort]]
-                   
                 })
                 if(usersBySort.length) {
                     res.status(200).json({
@@ -98,7 +97,9 @@ class UserController {
                     model: Auto,   attributes: {
                         exclude: ['id_mark', 'id_trans', 'id_drive', 'id_rudder', 'id_type', 'id_price'],
                     }, include: {
-                        model: MarkAuto
+                        model: MarkAuto, through: {
+                            attributes: []
+                        }
                     }
                 }}
             })
@@ -144,7 +145,7 @@ class UserController {
             if (!err.isEmpty()) {
                 res.status(400).json({
                     status: 'error',
-                    message: err.array()
+                    message: err.message
                 })
                 return;
             }
@@ -165,6 +166,7 @@ class UserController {
                 confirmed_hash: generateHashMD5(req.body.email + process.env.SECRET_KEY)
             }
             delete data.passwordConfirm
+            console.log(data)
             const userNew = await User.create(data)
             if (userNew) {
                 res.status(200).json({

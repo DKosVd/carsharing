@@ -42,7 +42,17 @@ Cart.init({
     cost: {
         type: DataTypes.DECIMAL(8, 2),
         allowNull: false
-    }
+    },
+    isConfirmed: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: 0
+    },
+    isWait: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: 1
+    } 
 },
 {sequelize, modelName: 'cart'}
 )

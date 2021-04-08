@@ -14,17 +14,28 @@ export function Orders(props) {
         }
         getData();
     }, [])
+
+    console.log(state)
     return (
         <Switch>
             <Route exact path={'/admin/orders'}>
                 <div className="orders">
                     <h2>Заказы</h2>
+                    <h3>Ожидают подтверждения</h3>
                     <div className="orders_row">
-                        {state && state.map(elem => <Order key={elem.id_cart} {...elem} />)}
+                        {state?.wait?.map(elem => <Order key={elem.id_cart} {...elem} />)}
+                    </div>
+                    <h3>Подтвержденные заказы</h3>
+                    <div className="orders_row">
+                        {state?.allow?.map(elem => <Order key={elem.id_cart} {...elem} />)}
+                    </div>
+                    <h3>Отказано</h3>
+                    <div className="orders_row">
+                        {state?.notAllow?.map(elem => <Order key={elem.id_cart} {...elem} />)}
                     </div>
                 </div>
             </Route>
-            <Route path={'/admin/orders/:id'} component={OrderFull}/>
+            <Route path={'/admin/orders/:id'} component={OrderFull} />
         </Switch>
     )
 }

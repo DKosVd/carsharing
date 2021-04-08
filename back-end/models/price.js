@@ -1,7 +1,6 @@
 import { Sequelize } from 'sequelize';
 const { Model, DataTypes } = Sequelize;
 import { sequelize } from '../core/db.js';
-import { Auto } from './auto.js';
 
 class Price extends Model { }
 
@@ -13,19 +12,24 @@ Price.init({
         primaryKey: true,
         allowNull: false
     }, 
-    per_hour: {
+    id_price_value: {
         type: DataTypes.DECIMAL(8, 2),
         allowNull: false,
+        references: {
+            model: 'price_value',
+            key: 'id_price_value'
+        }
     },
-    per_day: {
+    id_auto: {
         type: DataTypes.DECIMAL(8, 2),
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: 'auto',
+            key: 'id_auto'
+        }
     }
 },
 {sequelize, modelName: 'price'}
 )
-
-
-
 
 export {Price}

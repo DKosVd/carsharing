@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { opt } from '../../../utils/capitalizeAndOpt'
-export function Order({id_cart, order_date, return_date, cost}) {
+export function Order({id_cart, order_date, return_date, cost, isConfirmed, isWait}) {
     const history = useHistory();
 
     const handleClick = () => {
@@ -9,7 +9,7 @@ export function Order({id_cart, order_date, return_date, cost}) {
     }
 
     return (
-        <div className="order_row" onClick={handleClick}>
+        <div className={`order_row ${isWait ? 'order__wait' : isConfirmed ? 'order__allow': 'order__reject'}`} onClick={handleClick} >
             <div className="order_order order_size">
                 <p className="order_title">Заказ</p>
                 <span className="order_text">Дата начала аренды: {new Date(order_date).toLocaleString('ru', opt)}</span>

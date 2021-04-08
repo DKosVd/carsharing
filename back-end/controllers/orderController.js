@@ -1,4 +1,3 @@
-import { pool } from '../core/dbConnection.js';
 import { Cart } from '../models/cart.js';
 import { Auto } from '../models/index.js';
 import { User } from '../models/index.js';
@@ -8,11 +7,23 @@ class OrderController {
 
     async allOrder(_, res) {
         try {
-            const orders = await Cart.findAll({})
-            if(orders) {
+            const ordersByAllow = await Cart.findAll({
+                where: { isConfirmed: true}
+            })
+            const ordersByNotAllow = await Cart.findAll({
+                where: { isConfirmed: false}
+            })
+            const ordersWait = await Cart.findAll({
+                where: { isWait: true}
+            })
+            if(ordersByAllow || ordersByNotAllow || ordersWait) {
                 res.status(200).json({
                     status: 'success', 
-                    data: orders
+                    data: {
+                        allow: ordersByAllow,
+                        wait: ordersWait,
+                        notAllow: ordersByNotAllow
+                    }
                 })
                 return;
             }
@@ -43,6 +54,23 @@ class OrderController {
             return;
         } catch(err) {
             res.status(500).send()
+        }
+    }
+
+    async orderProccess(req, res) {
+        try {
+            const { isConfirmed, id_user } = req.body
+            const orderProccess = await Cart.update({isConfirmed, isWait: false}, { where: {id_cart: id_user}})
+            if(orderProccess[0]) {
+                res.status(204).json({
+                    status: 'success'
+                })
+                return
+            }
+            res.status(404).send();
+            return;
+        } catch(err) {
+            res.status(500).send();
         }
     }
 

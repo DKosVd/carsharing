@@ -418,8 +418,8 @@ th, td {
   align-items: center;
   justify-content: center;
   position: absolute;
-  bottom: 0;
-  left: 0;
+  top: 0;
+  right: 0;
   margin: 10px 0px 0px 0px;
   border-radius: 5px;
   width: 40%;
@@ -658,4 +658,27 @@ body .modal_overlay {
 
 .order_full {
   display: flex;
+}
+
+.order__allow {
+  background-color: #aceecf;
+}
+
+.order__reject {
+  background-color: #e2959d;
+}
+
+.order__reject_user {
+  filter: blur(3px);
+}
+
+.order__reject_user:hover {
+  transition: filter .3s;
+  filter: blur(0px);
+}
+
+
+
+.order__wait {
+  background-color: #e6dcab;
 }

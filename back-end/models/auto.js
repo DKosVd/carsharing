@@ -13,14 +13,6 @@ Auto.init({
         primaryKey: true,
         allowNull: false
     }, 
-    id_mark: {
-        type: DataTypes.INTEGER(3),
-        allowNull: false,
-        references: {
-            model: 'mark_auto',
-            key: 'id_mark'
-        }
-    }, 
     is_present: {
         type: DataTypes.BOOLEAN, 
         allowNull: true,
@@ -30,52 +22,12 @@ Auto.init({
         type: DataTypes.STRING(15),
         allowNull: false,
     }, 
-    id_trans: {
-        type: DataTypes.INTEGER(1),
-        allowNull: false,
-        references: {
-            model: 'transmission',
-            key: 'id_trans'
-        }
-    }, 
-    id_drive: {
-        type: DataTypes.INTEGER(1),
-        allowNull: false,
-        references: {
-            model: 'drive',
-            key: 'id_drive'
-        }
-    }, 
-    id_rudder: {
-        type: DataTypes.INTEGER(1),
-        allowNull: false,
-        references: {
-            model: 'rudder',
-            key: 'id_rudder'
-        }
-    }, 
     seats: {
         type: DataTypes.INTEGER(2),
         allowNull: false,
     }, 
-    id_type: {
-        type: DataTypes.INTEGER(1),
-        allowNull: false,
-        references: {
-            model: 'type_auto',
-            key: 'id_type'
-        }
-    }, 
-    id_price: {
-        type: DataTypes.INTEGER(1),
-        allowNull: false,
-        references: {
-            model: 'price',
-            key: 'id_price'
-        }
-    }, 
-    src_img: {
-        type: DataTypes.STRING(200),
+    img: {
+        type: DataTypes.STRING(255),
         allowNull: true,
         defaultValue: null
     }

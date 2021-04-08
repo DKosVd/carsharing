@@ -2,9 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { capitalize, opt } from '../../../utils/capitalizeAndOpt'
 
-export function RowCars({ auto, order_date, return_date, cost }) {
+export function RowCars({ auto, order_date, return_date, cost, isConfirmed, isWait }) {
     return (
-        <div className="car_info column">
+        <div className={`car_info column ${isWait ? 'order__wait': isConfirmed ? 'order__allow' : 'order__reject order__reject_user'}`}>
             <div className="car_image">
                 <img src={auto.src_img} alt={`${auto.mark_of_auto.name_mark} ${auto.model}`} title={`${auto.mark_of_auto.name_mark} ${auto.model}`} />
             </div>

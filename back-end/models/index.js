@@ -8,6 +8,8 @@ import { Transmission } from "./transmission.js";
 import { User } from "./user.js";
 import { Role } from "./user_role.js";
 import { TypeAuto } from "./type_of_auto.js"
+import { Characteristics } from "./characteristics.js";
+import { PriceValue } from "./price_value.js";
 
 
 User.belongsToMany(Auto, { through: Cart, foreignKey: 'id_user'})
@@ -17,23 +19,28 @@ Cart.belongsTo(User, {foreignKey: 'id_user'})
 Auto.hasMany(Cart, {onDelete: 'cascade', onUpdate: 'cascade',  foreignKey: 'id_avto'} )
 Cart.belongsTo(Auto, {foreignKey: 'id_avto'})
 
-Auto.belongsTo(Rudder, {foreignKey: 'id_rudder'})
-Rudder.hasMany(Auto, {onDelete: 'cascade', onUpdate: 'cascade',  foreignKey: 'id_rudder'})
 
-Auto.belongsTo(Transmission, {foreignKey: 'id_trans'})
-Transmission.hasMany(Auto, {onDelete: 'cascade', foreignKey: 'id_trans'})
+Auto.belongsToMany(PriceValue, {through: Price, foreignKey: 'id_auto'})
+PriceValue.belongsToMany(Auto, {through: Price, foreignKey: 'id_price_value'})
 
-Auto.belongsTo(Price, {foreignKey: 'id_price'})
-Price.hasMany(Auto, {onDelete: 'cascade', onUpdate: 'cascade', foreignKey: 'id_price'})
+Rudder.belongsToMany(Auto, {through: Characteristics, foreignKey: 'id_rudder'})
+Auto.belongsToMany(Rudder, { through: Characteristics, foreignKey: 'id_auto'})
 
-Auto.belongsTo(Drive, {foreignKey: 'id_drive'})
-Drive.hasMany(Auto, {onDelete: 'cascade', onUpdate: 'cascade', foreignKey: 'id_drive'})
 
-Auto.belongsTo(MarkAuto, {foreignKey: 'id_mark'})
-MarkAuto.hasMany(Auto, {onDelete: 'cascade', onUpdate: 'cascade', foreignKey: 'id_mark'})
+TypeAuto.belongsToMany(Auto, {through: Characteristics, foreignKey: 'id_type'})
+Auto.belongsToMany(TypeAuto, { through: Characteristics, foreignKey: 'id_auto'})
 
-Auto.belongsTo(TypeAuto, {foreignKey: 'id_type'})
-TypeAuto.hasMany(Auto, {onDelete: 'cascade', onUpdate: 'cascade',  foreignKey: 'id_type'})
+
+Drive.belongsToMany(Auto, {through: Characteristics, foreignKey: 'id_drive'})
+Auto.belongsToMany(Drive, { through: Characteristics, foreignKey: 'id_auto'})
+
+
+MarkAuto.belongsToMany(Auto, {through: Characteristics, foreignKey: 'id_mark'})
+Auto.belongsToMany(MarkAuto, { through: Characteristics, foreignKey: 'id_auto'})
+
+
+Transmission.belongsToMany(Auto, {through: Characteristics, foreignKey: 'id_trans'})
+Auto.belongsToMany(Transmission, { through: Characteristics, foreignKey: 'id_auto'})
 
 User.belongsTo(Role, {foreignKey: 'id_role'})
 Role.hasMany(User, {onDelete: 'cascade', onUpdate: 'cascade', foreignKey: 'id_role'});
