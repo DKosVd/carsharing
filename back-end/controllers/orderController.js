@@ -1,17 +1,18 @@
+import {Sequelize} from 'sequelize'
 import { Cart } from '../models/cart.js';
 import { Auto } from '../models/index.js';
 import { User } from '../models/index.js';
-
+const {Op} = Sequelize;
 
 class OrderController {
 
     async allOrder(_, res) {
         try {
             const ordersByAllow = await Cart.findAll({
-                where: { isConfirmed: true}
+                where: { [Op.and]: [{isConfirmed: true, isWait: false}]}
             })
             const ordersByNotAllow = await Cart.findAll({
-                where: { isConfirmed: false}
+                where: { [Op.and]: [{isConfirmed: false, isWait: false}]}
             })
             const ordersWait = await Cart.findAll({
                 where: { isWait: true}
@@ -38,15 +39,24 @@ class OrderController {
         try {
             const { id } = req.params;
             const order = await Cart.findOne({
-                include: [{ model: User, attributes: ['first_name', 'sur_name', 'email', 'nickname']}, {model: Auto, attributes: ['model', 'src_img']}],
+                include: [{ model: User, attributes: ['nickname', 'email', 'first_name', 'sur_name']}, {model: Auto, attributes: ['model', 'img']} ],
                 where: {
                     id_cart: id
                 },
             })
+            const manager = await User.findOne({
+                where: {
+                    id_user: order.id_admin,
+                },
+                attributes: ['nickname', 'email', 'first_name', 'sur_name']
+            })
             if(order) {
                 res.status(200).json({
                     status: 'success', 
-                    data: order
+                    data: {
+                        order,
+                        manager:JSON.parse(JSON.stringify(manager))    
+                    }
                 })
                 return
             }
@@ -59,8 +69,8 @@ class OrderController {
 
     async orderProccess(req, res) {
         try {
-            const { isConfirmed, id_user } = req.body
-            const orderProccess = await Cart.update({isConfirmed, isWait: false}, { where: {id_cart: id_user}})
+            const { isConfirmed, id_order } = req.body
+            const orderProccess = await Cart.update({isConfirmed, isWait: false, id_admin: req.user.id_user}, { where: {id_cart: id_order}})
             if(orderProccess[0]) {
                 res.status(204).json({
                     status: 'success'

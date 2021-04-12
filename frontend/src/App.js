@@ -1,6 +1,6 @@
 import React from 'react';
 import Admin from './Pages/AdminPage/AdminPage';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Adminsignin from './Pages/AdminSignIn/AdminSignIn';
 import { authMe } from './store/actions/currentUser/currentUser';
@@ -31,6 +31,7 @@ function App() {
           status={status}
           preloader={Loading.ERROR}
         />} />
+        <Redirect to={"/admin"}/>
       </Switch>
     </>
   );

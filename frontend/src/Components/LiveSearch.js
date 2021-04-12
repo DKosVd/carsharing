@@ -19,7 +19,7 @@ export function LiveSearch({ cb, datas, paramsFilterBy }) {
 
     return (
         <div className="input_for_search">
-            <label> Поиск: <input type="text" onInput={handleInput} value={state} id="search"/> </label>
+            <label> Поиск: <input type="text" onInput={handleInput} value={state} id="search"/></label>
         </div>
     )
 }

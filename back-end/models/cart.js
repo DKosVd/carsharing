@@ -52,7 +52,11 @@ Cart.init({
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: 1
-    } 
+    },
+    id_admin: {
+        type: DataTypes.INTEGER(3),
+        allowNull: false
+    }
 },
 {sequelize, modelName: 'cart'}
 )

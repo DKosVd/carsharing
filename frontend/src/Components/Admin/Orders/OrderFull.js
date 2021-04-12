@@ -9,19 +9,20 @@ export function OrderFull() {
     const { id } = useParams();
     const history = useHistory();
     const [data, setData] = React.useState({});
+    const [manager, setManager] = React.useState({});
     React.useEffect(() => {
         async function getFullInfo() {
             const { data } = await axios.get(`/orders/${id}`)
-            setData(data.data)
+            setData(data.data.order)
+            setManager(data.data.manager)
         }
         getFullInfo();
     }, [])
-
     const handlerOrderProccess = (e) => {
-        if(e.target.dataset['confirm']) {
+        if (e.target.dataset['confirm']) {
             axios.patch(`/orders/${id}/proccess`, {
                 isConfirmed: Boolean(+e.target.dataset['confirm']),
-                id_user: id
+                id_order: id
             })
         }
     }
@@ -33,6 +34,7 @@ export function OrderFull() {
     const handleGoToCar = () => {
         history.push(`/admin/autos/${data.id_avto}`)
     }
+
     return (
         <div>
             <h2>Подробнее о заказе</h2>
@@ -58,10 +60,28 @@ export function OrderFull() {
                     </div>
                 </div>
             </div>
-            <div onClick={handlerOrderProccess}> 
-                <button className="btn btn-success" data-confirm="1">Подтвердить</button>
-                <button className="btn btn-danger" data-confirm="0">Отказать</button>
+            <div onClick={handlerOrderProccess}>
+                {
+                    data.isWait ?
+                        <>
+                            <button className="btn btn-danger" data-confirm="0">Отказать</button>
+                            <button className="btn btn-success" data-confirm="1">Подтвердить</button>
+                        </>
+                        :
+                        data.isConfirmed
+                            ? <button className="btn btn-danger" data-confirm="0">Отказать</button>
+                            : <button className="btn btn-success" data-confirm="1">Подтвердить</button>
+                }
             </div>
+            {
+                manager &&
+                <div>
+                    <h3>Заказ был обработан администратором</h3>
+                    <h3>Имя: {manager.first_name}</h3>
+                    <h3>Фамилия: {manager.sur_name}</h3>
+                    <h4>По всем вопросам обращаться на почту: {manager.email}</h4>
+                </div>
+            }
         </div>
     )
 }

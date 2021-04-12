@@ -81,7 +81,7 @@ class carController {
         try {
             const idAuto = req.params.id
             const auto = await Auto.findOne({
-                include: [{ model: PriceValue, attributes: ['per_hour'] }, { model: MarkAuto }, { model: TypeAuto }, { model: Drive }, { model: Rudder }, { model: Transmission }],
+                include: [{ model: PriceValue, attributes: ['per_hour'] }, { model: MarkAuto, through: { attributes: []} }, { model: TypeAuto, through: { attributes: []} }, { model: Drive, through: { attributes: []} }, { model: Rudder, through: { attributes: []} }, { model: Transmission, through: { attributes: []} }],
                 where: {
                     id_auto: idAuto
                 }

@@ -6,10 +6,10 @@ export function RowCars({ auto, order_date, return_date, cost, isConfirmed, isWa
     return (
         <div className={`car_info column ${isWait ? 'order__wait': isConfirmed ? 'order__allow' : 'order__reject order__reject_user'}`}>
             <div className="car_image">
-                <img src={auto.src_img} alt={`${auto.mark_of_auto.name_mark} ${auto.model}`} title={`${auto.mark_of_auto.name_mark} ${auto.model}`} />
+                <img src={auto.src_img} alt={`${auto?.mark_of_autos && auto?.mark_of_autos[0]?.name_mark} ${auto.model}`} title={`${auto?.mark_of_autos && auto?.mark_of_autos[0]?.name_mark} ${auto.model}`} />
             </div>
             <div className="car_body">
-                <h4>{auto.mark_of_auto.name_mark} {auto.model}</h4>
+                <h4>{auto?.mark_of_autos && auto?.mark_of_autos[0]?.name_mark} {auto.model}</h4>
                 <p><span className="car_body_elem">Сумма:</span> {cost} ₽</p>
                 <p><span className="car_body_elem">Дата заказа:</span> {capitalize(new Date(order_date).toLocaleString('ru', opt))}</p>
                 <p><span className="car_body_elem">Дата возврата:</span> {capitalize(new Date(return_date).toLocaleString('ru', opt))}</p>

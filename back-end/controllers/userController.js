@@ -230,14 +230,13 @@ class UserController {
     async updateUser(req, res) {
         try {
             const updateInfo = req.body;
-            const user = User.update(updateInfo, {where: {id_user: updateInfo.id_user}})
-            if(user) {
+            const user = await User.update(updateInfo, {where: {id_user: updateInfo.id_user}})
+            if(user[0]) {
                 res.status(200).json({
                     status: 'success'
                 })
                 return 
             }
-            res.status(404).send();
         } catch(err) {
             res.status(500).json({
                 status: 'error',

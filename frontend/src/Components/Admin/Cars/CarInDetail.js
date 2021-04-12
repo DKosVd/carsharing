@@ -38,15 +38,15 @@ export function CarInDetail() {
                             <tbody>
                                 <tr>
                                     <th>Трансмиссия</th>
-                                    <td>{auto.transmission?.name_trans}</td>
+                                    <td>{auto?.transmissions && auto?.transmissions[0]?.name_trans}</td>
                                 </tr>
                                 <tr>
                                     <th>Привод</th>
-                                    <td>{auto.drive?.name_drive}</td>
+                                    <td>{auto.drives && auto?.drives[0]?.name_drive}</td>
                                 </tr>
                                 <tr>
                                     <th>Руль</th>
-                                    <td>{auto.rudder?.name_rudder}</td>
+                                    <td>{auto.rudders && auto.rudders[0]?.name_rudder}</td>
                                 </tr>
                                 <tr>
                                     <th>Количество мест</th>
@@ -54,11 +54,11 @@ export function CarInDetail() {
                                 </tr>   
                                 <tr>
                                     <th>Тип кузова</th>
-                                    <td>{auto.type_of_auto?.name_type}</td>
+                                    <td>{auto.type_of_autos && auto.type_of_autos[0]?.name_type}</td>
                                 </tr>
                                 <tr>
                                     <th>Цена за час</th>
-                                    <td>{auto.price?.per_hour}</td>
+                                    <td>{auto.price_values && auto.price_values[0]?.per_hour}</td>
                                 </tr>
                                 <tr>
                                     <th>В наличии</th>

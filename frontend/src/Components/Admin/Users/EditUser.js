@@ -4,19 +4,24 @@ import { updateUser } from '../../../store/actions/user/user';
 import { Updating } from '../../../store/reducers/user/state';
 import { Form } from '../Form';
 
-
 export default function Edituser(props) {
     //TODO: Сделать валидацию
     const dispatch = useDispatch();
+    const [change, setChange] = React.useState(false)
     const user = useSelector(state => state.user.user);
     const [data, setData] = React.useState({ ...user })
     const updateStatus = useSelector(state => state.user.UpdateStatus);
     const handleInput = (e) => {
+        setChange(true)
         setData({ ...data, [e.target.name]: e.target.value })
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(updateUser(data))
+        if(change){
+            dispatch(updateUser(data))
+            return
+        }
+        return
     }
 
   

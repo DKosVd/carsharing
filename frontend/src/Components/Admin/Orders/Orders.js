@@ -3,6 +3,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router';
 import { Order } from './Order';
 import { OrderFull } from './OrderFull';
+import { Statusorder } from './StatusOrder';
 
 export function Orders(props) {
     const [state, setState] = React.useState([])
@@ -21,18 +22,9 @@ export function Orders(props) {
             <Route exact path={'/admin/orders'}>
                 <div className="orders">
                     <h2>Заказы</h2>
-                    <h3>Ожидают подтверждения</h3>
-                    <div className="orders_row">
-                        {state?.wait?.map(elem => <Order key={elem.id_cart} {...elem} />)}
-                    </div>
-                    <h3>Подтвержденные заказы</h3>
-                    <div className="orders_row">
-                        {state?.allow?.map(elem => <Order key={elem.id_cart} {...elem} />)}
-                    </div>
-                    <h3>Отказано</h3>
-                    <div className="orders_row">
-                        {state?.notAllow?.map(elem => <Order key={elem.id_cart} {...elem} />)}
-                    </div>
+                    <Statusorder name={"Ожидают подтверждения"} orders={state.wait}/>
+                    <Statusorder name={"Подтвержденные заказы"} orders={state.allow}/>
+                    <Statusorder name={"Отказано"} orders={state.notAllow}/>
                 </div>
             </Route>
             <Route path={'/admin/orders/:id'} component={OrderFull} />
