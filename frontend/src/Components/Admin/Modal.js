@@ -6,7 +6,6 @@ export function Modal({ title, children, onClose, show }) {
       onClose()
       return;
     };
-    return;
   }
   return (
     <>

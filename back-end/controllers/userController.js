@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 dotenv.config();
-import {Sequelize} from 'sequelize'
+import { Sequelize } from 'sequelize'
 import { pool } from '../core/dbConnection.js';
 import { validationResult } from 'express-validator';
 import { generateHashMD5 } from '../utils/generateHash.js';
@@ -10,7 +10,7 @@ import { jwtSignRole } from '../utils/jwtSignRole.js';
 import { User } from '../models/user.js';
 import { Auto, Cart } from '../models/cart.js';
 import { MarkAuto } from '../models/mark_of_auto.js';
-const {Op} = Sequelize;
+const { Op } = Sequelize;
 
 
 class UserController {
@@ -20,10 +20,10 @@ class UserController {
         try {
             const hash = req.query.hash
             const user = await User.findOne({
-                where: {confirmed_hash: hash}
+                where: { confirmed_hash: hash }
             })
             if (user) {
-                await User.update({ confirmed: true }, { where: {confirmed_hash: hash} })
+                await User.update({ confirmed: true }, { where: { confirmed_hash: hash } })
                 res.status(200).json({
                     status: 'success'
                 })
@@ -41,12 +41,12 @@ class UserController {
 
     async getUsers(req, res) {
         try {
-            if(Object.keys(req.query).length !== 0) {
-                const usersBySort = await User.findAll( {
-                    where: {[Op.and]: [{id_role: 1, isBanned: false}]},
+            if (Object.keys(req.query).length !== 0) {
+                const usersBySort = await User.findAll({
+                    where: { [Op.and]: [{ id_role: 1, isBanned: false }] },
                     order: [[req.query.name, req.query.sort]]
                 })
-                if(usersBySort.length) {
+                if (usersBySort.length) {
                     res.status(200).json({
                         status: 'success',
                         data: usersBySort
@@ -57,12 +57,12 @@ class UserController {
                     return;
                 }
             }
-            const users = await User.findAll( {
-                where: {[Op.and]: [{id_role: 1, isBanned: false}]},
+            const users = await User.findAll({
+                where: { [Op.and]: [{ id_role: 1, isBanned: false }] },
                 // attributes: ['id_user', 'confirmed', 'first_name'],
                 // include: [{model: Role, required: true}]
             })
-    
+
             if (users) {
                 res.status(200).json({
                     status: 'success',
@@ -91,17 +91,19 @@ class UserController {
                 where: {
                     id_user: idOfUser
                 },
-                include: {model: Cart,  attributes: {
-                    exclude: ['id_user', 'id_cart', 'id_avto'],
-                },include: {
-                    model: Auto,   attributes: {
-                        exclude: ['id_mark', 'id_trans', 'id_drive', 'id_rudder', 'id_type', 'id_price'],
+                include: {
+                    model: Cart, attributes: {
+                        exclude: ['id_user', 'id_cart', 'id_avto'],
                     }, include: {
-                        model: MarkAuto, through: {
-                            attributes: []
+                        model: Auto, attributes: {
+                            exclude: ['id_mark', 'id_trans', 'id_drive', 'id_rudder', 'id_type', 'id_price'],
+                        }, include: {
+                            model: MarkAuto, through: {
+                                attributes: []
+                            }
                         }
                     }
-                }}
+                }
             })
             if (user) {
                 res.status(200).json({
@@ -121,17 +123,17 @@ class UserController {
     }
 
     async getUserInfo(req, res) {
-        try {   
+        try {
             const user = req.user;
-            if(user) {
+            if (user) {
                 res.status(200).json({
                     status: "success",
                     data: user
                 })
                 return;
-            } 
+            }
             res.status(404).send();
-        } catch(err) {
+        } catch (err) {
             res.status(500).json({
                 status: 'error',
                 message: err.message
@@ -150,7 +152,7 @@ class UserController {
                 return;
             }
             const user = await User.findOne({
-                where: {email: req.body.email}
+                where: { email: req.body.email }
             }
             )
             if (user) {
@@ -210,7 +212,7 @@ class UserController {
     async deleteUser(req, res) {
         try {
             const idOfUser = req.params.id;
-            const userNew = await User.update({isBanned: true}, {where: {id_user: idOfUser}}) 
+            const userNew = await User.update({ isBanned: true }, { where: { id_user: idOfUser } })
             if (userNew) {
                 res.status(200).json({
                     status: 'success'
@@ -230,14 +232,14 @@ class UserController {
     async updateUser(req, res) {
         try {
             const updateInfo = req.body;
-            const user = await User.update(updateInfo, {where: {id_user: updateInfo.id_user}})
-            if(user[0]) {
+            const user = await User.update(updateInfo, { where: { id_user: updateInfo.id_user } })
+            if (user[0]) {
                 res.status(200).json({
                     status: 'success'
                 })
-                return 
+                return
             }
-        } catch(err) {
+        } catch (err) {
             res.status(500).json({
                 status: 'error',
                 message: err.message
@@ -250,10 +252,10 @@ class UserController {
             // TODO: Написать функцию
             const reqUser = JSON.stringify(req.user);
             const user = JSON.parse(reqUser)
-            if(Object.keys(user) !== 0) {
-                switch(user.id_role){
+            if (Object.keys(user) !== 0) {
+                switch (user.id_role) {
                     case 1:
-                        const dataUser =  jwtSignRole(user, process.env.SECRET_KEY, '7d')
+                        const dataUser = jwtSignRole(user, process.env.SECRET_KEY, '7d')
                         res.json(dataUser)
                         break;
                     case 2:
@@ -273,6 +275,30 @@ class UserController {
                 message: err.message
             })
         }
+    }
+
+    async search(req, res) {
+        try {
+            const {name, surname} = req.query;
+            const user = await User.findAll({
+                where: {
+                    [Op.and]: [{
+                        first_name: {
+                            [Op.like]: `%${name.toLowerCase()}%`
+                        }
+                    },
+                    {
+                        sur_name: {
+                            [Op.like]: `%${surname?.toLowerCase() || ''}%` 
+                        }
+                    }
+                ]
+                }
+            })
+            console.log(JSON.parse(JSON.stringify(user)))
+        } catch (err) {
+            console.log(err)
+        }   
     }
 }
 

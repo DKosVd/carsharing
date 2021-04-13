@@ -23,6 +23,7 @@ app.delete('/auto/:id', passport.authenticate('admin'), carCtrl.deleteAuto)
 
 
 app.get('/user', UserCtrl.getUsers)
+app.get('/user/search', UserCtrl.search)
 app.get('/user/verify', UserCtrl.verifyUser)
 app.get('/user/me', passport.authenticate('admin'), UserCtrl.getUserInfo)
 app.get('/user/:id', UserCtrl.getUser)

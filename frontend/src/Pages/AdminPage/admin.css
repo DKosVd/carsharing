@@ -465,6 +465,9 @@ th, td {
 }
 
 .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 120px;
   min-width: 80px;
   padding: 5px 5px 5px 5px;
@@ -593,6 +596,12 @@ body .modal_overlay {
 .modal_body_elem > label {
   margin: 0px 0px 7px 0px;
   font-size: 18px;
+}
+
+.search__add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
