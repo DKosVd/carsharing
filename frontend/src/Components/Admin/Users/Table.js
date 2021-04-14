@@ -26,7 +26,6 @@ const schema = yup.object().shape({
     passwordConfirm: yup.string().oneOf([yup.ref('password'), null], 'Пароли не совпадают'),
     email: yup.string().email('Недопустимый формат для почты').required().min(10, 'Минимальная длина 10 символов'),
     age: yup.date()
-
 })
 
 export default function Table(props) {
