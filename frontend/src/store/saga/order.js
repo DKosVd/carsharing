@@ -6,7 +6,8 @@ import { Loading, Updating } from "../reducers/order/state.js";
 
 export function* orderSaga() {
     yield takeEvery(OrderActions.FETCH_ORDER, getOrder);
-    yield takeEvery(OrderActions.PROCESS_ORDER, setProccess)
+    yield takeEvery(OrderActions.PROCESS_ORDER, setProccess);
+    yield takeEvery(OrderActions.ADD_NEW_ORDER, addOrder);
 }
 function* getOrder({ payload }) {
     try {
@@ -26,5 +27,17 @@ function* setProccess({ payload }) {
         yield put(setStatusProcess(Updating.UPDATED))
     } catch (err) {
         yield put(setStatusProcess(Updating.ERROR))
+    }
+}
+
+function* addOrder({ payload }) {
+    try {
+        console.log(payload)
+        // yield put(setStatusProcess(Updating.UPDATING))
+        // yield call(orderApi.proccessRequest, payload)
+        yield call(orderApi.addNewOrder, payload)
+        // yield put(setStatusProcess(Updating.UPDATED))
+    } catch (err) {
+        // yield put(setStatusProcess(Updating.ERROR))
     }
 }

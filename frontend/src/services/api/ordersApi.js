@@ -10,9 +10,12 @@ export const orderApi = {
         return data.data
     },
     async proccessRequest(info) {
-        console.log(info)
         const { data } = await axios.patch(`/orders/${info.id_order}/proccess`, info)
-        console.log(data)
+        return data
+    },
+
+    async addNewOrder(info) {
+        const { data } = await axios.post(`/orders`, info);
         return data
     }
 

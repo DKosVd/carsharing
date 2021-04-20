@@ -5,7 +5,8 @@ export const OrderActions  = {
     PROCESS_ORDER: 'order/PROCESS_ORDER',
     SET_STATUS_PROCESS: 'order/SET_STATUS_PROCESS',
     SET_MANAGER_FOR_ORDER: 'order/SET_MANAGER_FOR_ORDER',
-    SET_STATUS_ORDER: 'order/SET_STATUS_ORDER'
+    SET_STATUS_ORDER: 'order/SET_STATUS_ORDER',
+    ADD_NEW_ORDER: 'order/ADD_NEW_ORDER',
 }
 
 export const fetchOrder= (id) => ({
@@ -25,6 +26,11 @@ export const clear = () => ({
 export const setManagerForOrder = (manager) => ({
     type: OrderActions.SET_MANAGER_FOR_ORDER,
     payload: manager
+})
+
+export const addNewOrder = (data) => ({
+    type: OrderActions.ADD_NEW_ORDER,
+    payload: data
 })
 
 export const setProccessReq = (data) => ({

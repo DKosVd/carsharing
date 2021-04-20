@@ -580,6 +580,26 @@ th, td {
   width: 95%
 }
 
+.result__search_item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+}
+
+.result__search_item:hover {
+  border: 1px solid rgba(14, 194, 97, 1);
+  border-radius: 5px;
+  cursor: pointer;
+  margin: -1px;
+}
+
+.result__search__item__active {
+  border: 1px solid rgba(14, 194, 97, 1);
+  margin: -1px;
+}
+
 .modal_overlay {
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);

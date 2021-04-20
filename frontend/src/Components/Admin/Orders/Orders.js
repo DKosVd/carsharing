@@ -16,6 +16,8 @@ import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import { Updating } from '../../../store/reducers/order/state';
 import { Modal } from '../Modal';
 import ResultSearch from '../ResultSearch';
+import SearchItems from './SearchItems';
+import { addNewOrder } from '../../../store/actions/order/order';
 
 const schema = yup.object().shape({
 
@@ -36,20 +38,49 @@ export function Orders(props) {
     const [stateForm, setStateForm] = React.useState({});
     const [show, setShow] = React.useState(false)
     const [resultSearch, setResultSearch] = React.useState(false)
+    const [stateSearch, setStateSearch] = React.useState({});
+    const [chose, setChose] = React.useState({});
     React.useEffect(() => {
         dispatch(fetchOrders())
         return () => dispatch(clear())
     }, [update])
 
+    const handleChose = (item) => {
+        setChose({...chose, ...item})
+    }
+
+
+
     const handleSetStateForm = async (e) => {
         setStateForm({
             ...stateForm,
-            [e.target.name] : e.target.value
+            [e.target.name]: e.target.value
         })
-        console.log(e.target.value.split(' '))
-        const [name, surname] = e.target.value.split(' ')
-        await axios.get(`/user/search?name=${name}&surname=${surname}`)
     }
+
+   
+
+    const handleSearch = async (e) => {
+        try {
+            const [name, sname] = stateForm[e.target.name].split(' ')
+            const { data } = await axios.get(`/${e.target.id}/search?q=${name || ''}&s=${sname || ''}`)
+            setStateSearch({
+                ...stateSearch,
+                [e.target.id]: data.data
+            })
+            setResultSearch({
+                [e.target.id]: true
+            })
+        } catch (err) {
+        }
+    }
+
+    const handleSumbit = (e) => {
+        e.preventDefault()
+        dispatch(addNewOrder({...stateForm, ...chose}))
+    }
+
+
 
     if (status === Loading.LOADING) {
         return (
@@ -75,43 +106,46 @@ export function Orders(props) {
                     <Statusorder name={"Подтвержденные заказы"} orders={orders.orderAllow} />
                     <Statusorder name={"Отказано"} orders={orders.orderNotAllow} />
                     <Modal title={"Добавление нового заказа"} show={show} onClose={() => setShow(false)}>
-                        <ResultSearch show={resultSearch} onClose={() => setResultSearch(false)}>
-
+                        <ResultSearch show={resultSearch.auto} onClose={() => setResultSearch({auto: false})} >
+                            <SearchItems items={stateSearch.auto} select={['model']} chose={handleChose} type={'auto'}/>
+                        </ResultSearch>
+                        <ResultSearch show={resultSearch.user} onClose={() => setResultSearch({user: false})}>
+                            <SearchItems items={stateSearch.user} select={['first_name', 'sur_name', 'email', 'age', 'nickname']} chose={handleChose} type={'user'}/>
                         </ResultSearch>
                         <div className="modal_body_main">
-                            <form>
+                            <form onSubmit={handleSumbit}>
                                 <div className="modal_body_elem">
-                                    <label htmlFor="username">Пользователь</label>
-                                    <input type="text" name="fname_sname" id="username" placeholder="Найти пользователя" value={stateForm?.fname_sname || ''} onBlur={() => setResultSearch(true)} onInput={handleSetStateForm} required />
+                                    <label htmlFor="user">Пользователь</label>
+                                    <input type="text" name="user" id="user" placeholder="Найти пользователя" value={stateForm?.user || ''} onBlur={handleSearch} onInput={handleSetStateForm} required />
                                 </div>
                                 <div className="modal_body_elem">
                                     <label htmlFor="auto">Автомобиль</label>
-                                    <input type="text" name="nmark_model" id="auto" placeholder="Найти автомобиль" required />
+                                    <input type="text" name="auto" id="auto" placeholder="Найти автомобиль" value={stateForm?.auto || ''} onBlur={handleSearch} onInput={handleSetStateForm} required />
                                 </div>
                                 <div className="modal_body_elem">
                                     <label htmlFor="order_date">Дата начала аренды</label>
-                                    <input type="date" name="order_date" id="order_date" required />
+                                    <input type="date" name="order_date" id="order_date" onInput={handleSetStateForm} required />
                                 </div>
                                 <div className="modal_body_elem">
                                     <label htmlFor="return_date">Дата окончания аренды</label>
-                                    <input type="date" name="return_date" id="return_date" required />
+                                    <input type="date" name="return_date" id="return_date" onInput={handleSetStateForm} required />
                                 </div>
                                 <div className="modal_body_elem">
                                     <p>Состояние заказа</p>
                                     <div className="modal_body_elem_df">
                                         <label htmlFor="status_access"><CheckIcon />
                                         </label>
-                                        <input type="radio" name="status_order" id="status_access" value="1" required />
+                                        <input type="radio" name="status_order" id="status_access" value="1" onInput={handleSetStateForm} required />
                                     </div>
                                     <div className="modal_body_elem_df">
                                         <label htmlFor="status_reject"><CloseIcon />
                                         </label>
-                                        <input type="radio" name="status_order" id="status_reject" value="0" required />
+                                        <input type="radio" name="status_order" id="status_reject" value="0" onInput={handleSetStateForm} required />
                                     </div>
                                 </div>
                                 <div className="modal_body_elem">
                                     <label htmlFor="isWait">В ожидании</label>
-                                    <input type="checkbox" name="isWait" id="isWait" defaultValue="1" value="0" defaultChecked required  />
+                                    <input type="checkbox" name="isWait" id="isWait" value="0" defaultValue="1" onInput={handleSetStateForm} defaultChecked required />
                                 </div>
                                 <button type="submit" className="btn btn-success" >Добавить</button>
                             </form>
