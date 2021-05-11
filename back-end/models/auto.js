@@ -30,6 +30,14 @@ Auto.init({
         type: DataTypes.STRING(255),
         allowNull: true,
         defaultValue: null
+    },
+    vin: {
+        type: DataTypes.STRING(17),
+        allowNull: false,
+    },
+    number: {
+        type: DataTypes.STRING(8),
+        allowNull: false
     }
 },
 {sequelize, modelName: 'auto'}

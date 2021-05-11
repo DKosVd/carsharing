@@ -10,6 +10,8 @@ import { Role } from "./user_role.js";
 import { TypeAuto } from "./type_of_auto.js"
 import { Characteristics } from "./characteristics.js";
 import { PriceValue } from "./price_value.js";
+import { Type_of_insurance } from "./type_of_insurance.js";
+import { Insurance } from "./insurance.js";
 
 
 User.belongsToMany(Auto, { through: Cart, foreignKey: 'id_user'})
@@ -22,6 +24,9 @@ Cart.belongsTo(Auto, {foreignKey: 'id_avto'})
 
 Auto.belongsToMany(PriceValue, {through: Price, foreignKey: 'id_auto'})
 PriceValue.belongsToMany(Auto, {through: Price, foreignKey: 'id_price_value'})
+
+Cart.belongsToMany(Type_of_insurance, {through: Insurance, foreignKey: 'id_cart'})
+Type_of_insurance.belongsToMany(Cart, {through: Insurance, foreignKey: 'id_type_insurance'})
 
 Rudder.belongsToMany(Auto, {through: Characteristics, foreignKey: 'id_rudder'})
 Auto.belongsToMany(Rudder, { through: Characteristics, foreignKey: 'id_auto'})
@@ -45,5 +50,5 @@ Auto.belongsToMany(Transmission, { through: Characteristics, foreignKey: 'id_aut
 User.belongsTo(Role, {foreignKey: 'id_role'})
 Role.hasMany(User, {onDelete: 'cascade', onUpdate: 'cascade', foreignKey: 'id_role'});
 
-export {Auto, Cart, Drive, MarkAuto, Price, Rudder, Transmission, User, Role, TypeAuto}
+export {Auto, Cart, Drive, MarkAuto, Price, Rudder, Transmission, User, Role, TypeAuto, Insurance, Type_of_insurance}
 

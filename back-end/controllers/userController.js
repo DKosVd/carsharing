@@ -279,27 +279,32 @@ class UserController {
 
     async search(req, res) {
         try {
-            const {name, surname} = req.query;
-            console.log(surname)
+            const {q, s} = req.query;
             const user = await User.findAll({
                 where: {
                     [Op.and]: [{
                         first_name: {
-                            [Op.like]: `%${name?.toLowerCase() || ''}%`
+                            [Op.like]: `%${q?.toLowerCase() || ''}%`
                         }
                     },
                     {
                         sur_name: {
-                            [Op.like]: `%${surname?.toLowerCase() || ''}%` 
+                            [Op.like]: `%${s?.toLowerCase() || ''}%` 
                         }
                     }
                 ]
                 },
                 attributes: ['id_user', 'first_name', 'sur_name', 'email', 'age', 'nickname']
             })
-            console.log(JSON.parse(JSON.stringify(user)))
+            res.status(200).json({
+                status: 'success',
+                data: JSON.parse(JSON.stringify(user)) 
+            })
+            return;
         } catch (err) {
-            console.log(err)
+            res.status(500).json({
+                status: "error"
+            })
         }   
     }
 }

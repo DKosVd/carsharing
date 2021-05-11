@@ -3,12 +3,14 @@ import { queryWithCheck } from '../utils/queryCheck.js'
 import { validationResult } from 'express-validator';
 import { Auto } from '../models/auto.js';
 import { MarkAuto } from '../models/mark_of_auto.js';
+import { Type_of_insurance } from '../models/type_of_insurance.js';
 import { TypeAuto } from '../models/type_of_auto.js';
 import { Drive } from '../models/drive.js';
 import { Rudder } from '../models/rudder.js';
 import { Transmission } from '../models/transmission.js';
 import { PriceValue } from '../models/price_value.js';
-
+import { Sequelize } from 'sequelize';
+const {Op} = Sequelize
 
 class carController {
 
@@ -17,7 +19,7 @@ class carController {
             const autos = await Auto.findAll({
                 include: [
                     {
-                        model: Rudder, 
+                        model: Rudder,
                         through: {
                             attributes: []
                         },
@@ -27,36 +29,36 @@ class carController {
                         model: Drive,
                         through: {
                             attributes: []
-                        }, 
+                        },
                         attributes: ['name_drive']
                     },
                     {
                         model: MarkAuto,
                         through: {
                             attributes: []
-                        }, 
+                        },
                         attributes: ['name_mark']
                     },
                     {
                         model: Transmission,
                         through: {
                             attributes: []
-                        }, 
+                        },
                         attributes: ['name_trans']
                     },
                     {
                         model: TypeAuto,
                         through: {
                             attributes: []
-                        }, 
+                        },
                         attributes: ['name_type']
                     },
                     {
                         model: PriceValue,
                         through: {
                             attributes: []
-                        }, 
-                    }
+                        },
+                    },
                 ]
             })
 
@@ -81,7 +83,7 @@ class carController {
         try {
             const idAuto = req.params.id
             const auto = await Auto.findOne({
-                include: [{ model: PriceValue, attributes: ['per_hour'] }, { model: MarkAuto, through: { attributes: []} }, { model: TypeAuto, through: { attributes: []} }, { model: Drive, through: { attributes: []} }, { model: Rudder, through: { attributes: []} }, { model: Transmission, through: { attributes: []} }],
+                include: [{ model: PriceValue, attributes: ['per_hour'] }, { model: MarkAuto, through: { attributes: [] } }, { model: TypeAuto, through: { attributes: [] } }, { model: Drive, through: { attributes: [] } }, { model: Rudder, through: { attributes: [] } }, { model: Transmission, through: { attributes: [] } }],
                 where: {
                     id_auto: idAuto
                 }
@@ -197,6 +199,32 @@ class carController {
                 status: 'error',
                 message: err.message
             })
+        }
+    }
+
+    async search(req, res) {
+        try {
+            const { q, s } = req.query;
+            console.log(q, s)
+            const auto = await Auto.findAll({
+                include: [{ model: MarkAuto }, { model: PriceValue, through: {attributes: []}}],
+                where: {
+                    [Op.and]: [{
+                        model: {
+                            [Op.like]: `%${q?.toLowerCase() || ''}%`
+                        }
+                    },
+                    ]
+                }
+            })
+            res.status(201).json({
+                status: 'success',
+                data: JSON.parse(JSON.stringify(auto))
+            })
+            return
+        } catch (err) {
+            console.log(err)
+            res.status(500).send()
         }
     }
 

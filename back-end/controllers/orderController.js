@@ -1,7 +1,8 @@
 import {Sequelize} from 'sequelize'
 import { Cart } from '../models/cart.js';
-import { Auto } from '../models/index.js';
+import { Auto, Type_of_insurance } from '../models/index.js';
 import { User } from '../models/index.js';
+import { Insurance } from '../models/insurance.js'
 const {Op} = Sequelize;
 
 class OrderController {
@@ -39,7 +40,7 @@ class OrderController {
         try {
             const { id } = req.params;
             const order = await Cart.findOne({
-                include: [{ model: User, attributes: ['nickname', 'email', 'first_name', 'sur_name']}, {model: Auto, attributes: ['model', 'img']} ],
+                include: [{ model: User, attributes: ['nickname', 'email', 'first_name', 'sur_name']}, {model: Type_of_insurance, through: {attributes: []}},  {model: Auto, attributes: ['model', 'img']} ],
                 where: {
                     id_cart: id
                 },
@@ -81,6 +82,30 @@ class OrderController {
             return;
         } catch(err) {
             res.status(500).send();
+        }
+    }
+
+    async addOrder(req, res) {
+        try {
+            const data = req.body;
+            const { id_user } = req.user;
+            const order = await Cart.create({
+                id_user: data.user.id_user,
+                id_avto: data.auto.id_auto,
+                order_date: data.order_date,
+                return_date: data.return_date,
+                cost: data.cost,
+                isConfirmed: data.status_order,
+                id_admin: id_user,
+                isWait: false
+            })
+            const insurance = await Insurance.create({
+                id_type_insurance: data.type_of_insurance,
+                id_cart: JSON.parse(JSON.stringify(order)).id_cart
+            })
+            res.status(201).send()
+        } catch(err) {
+            res.status(500).send(err)
         }
     }
 
